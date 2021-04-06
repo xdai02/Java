@@ -4,7 +4,7 @@ public class Verification {
 		System.out.println("2513276112".matches("[1-9]\\d{4,10}"));
 		
 		// 2. 验证QQ邮箱：QQ号码@qq.com
-		System.out.println("2513276112@qq.com".matches("[1-9]\\d{5,10}@qq\\.com"));
+		System.out.println("2513276112@qq.com".matches("[1-9]\\d{4,10}@qq\\.com"));
 		
 		// 3. 验证手机号
 		System.out.println("13671712345".matches("1[356789]\\d{9}"));
