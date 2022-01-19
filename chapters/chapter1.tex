@@ -49,7 +49,7 @@ Java是面向对象语言，吸收了C/C++的优点，并摒弃了难以理解�
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.9]{img/C1/1-1/1.png}
-    \caption{常见编程语言}
+	\caption{常见编程语言}
 \end{figure}
 
 \section{Hello World!}
@@ -84,3 +84,81 @@ Java编译器（compiler）的作用是将Java源程序编译成中间代码字�
 
 \section{Error or Warning?}
 
+\subsection{Error / Warning}
+
+在编写程序的过程中，错误是不可避免的，错误主要能够分为以下三种类别：
+
+\begin{enumerate}
+	\item 语法错误（syntax error）：程序的语法不合符编程语言的要求，编译器会反馈报错信息。
+
+	\item 逻辑错误（logical error）：人类在编程过程中的逻辑错误，无法被编译器所检测。
+
+	\item 运行时错误（runtime error）例如除以0、数组越界、指针越界、使用已经释放的空间、栈溢出等情况，可以被编译器发现。
+\end{enumerate}
+
+\newpage
+
+\section{注释}
+
+\subsection{注释（Comment）}
+
+在编程中加入注释可以增加程序的可读性和可维护性，编译器不会对注释的部分进行编译。 \\
+
+Java中注释分为两类：
+
+\begin{enumerate}
+	\item 单行注释：将一行内【//】之后的内容视为注释。
+	\item 多行注释：以【/*】开始，【*/】结束，中间的内容视为注释。
+\end{enumerate}
+
+\mybox{注释}
+\begin{lstlisting}[language=Java]
+/*
+	这个程序在屏幕上输出Hello World
+*/
+public class Comment {
+	// 主函数
+	public static void main(String[] args) {
+		System.out.println("Hello World!");		// 输出
+	}
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果} \\
+	Hello World!
+\end{tcolorbox}
+
+\newpage
+
+\section{不同语言的Hello World}
+
+\subsection{编程语言对比}
+
+\mybox{C}
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+
+int main() {
+	printf("Hello World\n");
+	return 0;
+}
+\end{lstlisting}
+
+\mybox{C++}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+using namespace std;
+
+int main() {
+	cout << "Hello World" << endl;
+	return 0;
+}
+\end{lstlisting}
+
+\mybox{Python}
+\begin{lstlisting}[language=Python]
+print("Hello World")
+\end{lstlisting}
+
+\newpage
