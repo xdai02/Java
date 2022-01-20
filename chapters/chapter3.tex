@@ -1,0 +1,104 @@
+\chapter{判断}
+
+\section{逻辑运算符}
+
+\subsection{关系运算符}
+
+\begin{table}[H]
+	\centering
+	\setlength{\tabcolsep}{5mm}{
+		\begin{tabular}{|c|c|}
+			\hline
+			\textbf{数学符号} & \textbf{关系运算符} \\
+			\hline
+			$ < $             & <                   \\
+			\hline
+			$ > $             & >                   \\
+			\hline
+			$ \le $           & <=                  \\
+			\hline
+			$ \ge $           & >=                  \\
+			\hline
+			$ \ne $           & !=                  \\
+			\hline
+			$ = $             & ==                  \\
+			\hline
+		\end{tabular}
+	}
+	\caption{关系运算符}
+\end{table}
+
+\subsection{逻辑运算符}
+
+Java中逻辑运算符有三种：
+
+\begin{enumerate}
+	\item 逻辑与\&\&（logical AND）：当多个条件同时为真，结果为真。
+	      \begin{table}[H]
+		      \centering
+		      \setlength{\tabcolsep}{5mm}{
+			      \begin{tabular}{|c|c|c|}
+				      \hline
+				      \textbf{条件1} & \textbf{条件2} & \textbf{条件1 \&\& 条件2} \\
+				      \hline
+				      T              & T              & T                         \\
+				      \hline
+				      T              & F              & F                         \\
+				      \hline
+				      F              & T              & F                         \\
+				      \hline
+				      F              & F              & F                         \\
+				      \hline
+			      \end{tabular}
+		      }
+		      \caption{逻辑与}
+	      \end{table}
+
+	\item 逻辑或||（logical OR）：多个条件有一个为真时，结果为真。
+	      \begin{table}[H]
+		      \centering
+		      \setlength{\tabcolsep}{5mm}{
+			      \begin{tabular}{|c|c|c|}
+				      \hline
+				      \textbf{条件1} & \textbf{条件2} & \textbf{条件1 || 条件2} \\
+				      \hline
+				      T              & T              & T                       \\
+				      \hline
+				      T              & F              & T                       \\
+				      \hline
+				      F              & T              & T                       \\
+				      \hline
+				      F              & F              & F                       \\
+				      \hline
+			      \end{tabular}
+		      }
+		      \caption{逻辑或}
+	      \end{table}
+
+	\item 逻辑非!（logical NOT）：条件为真时，结果为假；条件为假时，结果为真。
+	      \begin{table}[H]
+		      \centering
+		      \setlength{\tabcolsep}{5mm}{
+			      \begin{tabular}{|c|c|}
+				      \hline
+				      \textbf{条件} & \textbf{!条件} \\
+				      \hline
+				      T             & F              \\
+				      \hline
+				      F             & T              \\
+				      \hline
+			      \end{tabular}
+		      }
+		      \caption{逻辑非}
+	      \end{table}
+\end{enumerate}
+
+\newpage
+
+\section{if}
+
+\subsection{if}
+
+当if语句的条件为真时，进入花括号执行内部的代码；若条件为假，则跳过花括号执行后面的代码。 \\
+
+if语句主要有以下几种形式：

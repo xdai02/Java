@@ -136,15 +136,15 @@ public class Contant {
 			\hline
 			\textbf{数学符号} & \textbf{Java符号} & \textbf{含义} \\
 			\hline
-			$ + $             & +               & 加法          \\
+			$ + $             & +                 & 加法          \\
 			\hline
-			$ - $             & -               & 减法          \\
+			$ - $             & -                 & 减法          \\
 			\hline
-			$ \times $        & *               & 乘法          \\
+			$ \times $        & *                 & 乘法          \\
 			\hline
-			$ \div $          & /               & 除法          \\
+			$ \div $          & /                 & 除法          \\
 			\hline
-			$ \dots\dots $    & \%              & 取模          \\
+			$ \dots\dots $    & \%                & 取模          \\
 			\hline
 		\end{tabular}
 	}
@@ -168,21 +168,226 @@ Java中除法【/】的意义与数学中不同：
 	\setlength{\tabcolsep}{5mm}{
 		\begin{tabular}{|c|c|}
 			\hline
-			\textbf{运算符} & \textbf{描述}                                        \\
+			\textbf{运算符} & \textbf{描述}           \\
 			\hline
-			+=              & a += b等价于a = a + b \\
+			+=              & a += b等价于a = a + b   \\
 			\hline
-			-=              & \lstinline|a -= b|等价于\lstinline|a = a - b| \\
+			-=              & a -= b等价于a = a - b   \\
 			\hline
-			*=              & \lstinline|a *= b|等价于\lstinline|a = a * b| \\
+			*=              & a *= b等价于a = a * b   \\
 			\hline
-			/=              & \lstinline|a /= b|等价于\lstinline|a = a / b| \\
+			/=              & a /= b等价于a = a / b   \\
 			\hline
-			\%=             & \lstinline|a %= b|等价于\lstinline|a = a % b| \\
+			\%=             & a \%= b等价于a = a \% b \\
 			\hline
 		\end{tabular}
 	}
 	\caption{复合赋值运算符}
 \end{table}
+
+\newpage
+
+\section{输入输出函数}
+
+\subsection{System.out.println()}
+
+System.out.println()的功能是向屏幕输出指定格式的字符串内容。通过【+】运算符可以连接两个字符串。
+
+\mybox{字符串连接}
+\begin{lstlisting}[language=Java]
+public class StringConcatenation {
+	public static void main(String[] args) {
+		System.out.println("Hello" + "World");
+		System.out.println("Hello" + 2);
+		System.out.println("Hello" + 2 + 3);
+		System.out.println(2 + 3 + "Hello");
+	}
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果} \\
+	HelloWorld \\
+	Hello2 \\
+	Hello23 \\
+	5Hello
+\end{tcolorbox}
+
+\subsection{转义字符}
+
+在一个字符串描述的过程中，有可能会有一些特殊字符的信息。
+
+\begin{table}[H]
+	\centering
+	\setlength{\tabcolsep}{5mm}{
+		\begin{tabular}{|c|c|}
+			\hline
+			\textbf{转义字符}      & \textbf{描述}                        \\
+			\hline
+			\lstinline|\\| & 表示一个反斜杠\lstinline|\| \\
+			\hline
+			\lstinline|\'| & 表示一个单引号\lstinline|'| \\
+			\hline
+			\lstinline|\"| & 表示一个双引号\lstinline|"| \\
+			\hline
+			\lstinline|\n| & 换行                                 \\
+			\hline
+			\lstinline|\t| & 横向制表符                           \\
+			\hline
+		\end{tabular}
+	}
+	\caption{转义字符}
+\end{table}
+
+\mybox{转义字符}
+\begin{lstlisting}[language=Java]
+public class EscapeCharacter {
+	public static void main(String[] args) {
+		System.out.print("全球最大同性交友网站\n");
+		System.out.println("\'https://github.com\'");
+	}
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果} \\
+	全球最大同性交友网站 \\
+	'https://github.com'
+\end{tcolorbox}
+
+\subsection{Scanner}
+
+通过Scanner类可以获取用户的输入，使用Scanner类需要导入java.util.Scanner。根据实例化的Scanner类的对象，调用next()和nextLine()可以获取输入的字符串。 \\
+
+使用完Scanner类的对象后，需要关闭输入流。 \\
+
+\mybox{计算长方形面积}
+\begin{lstlisting}[language=Java]
+import java.util.Scanner;
+
+public class CircleArea {
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		double length, width;
+		double area;
+		
+		System.out.print("输入长度：");
+		length = scanner.nextDouble();
+		System.out.print("输入宽度：");
+		width = scanner.nextDouble();
+		area = length * width;
+		
+		System.out.println(String.format("面积 = %.2f", area));
+		scanner.close();
+	}
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果} \\
+	输入长度：20 \\
+	输入宽度：30 \\
+	面积 = 600.00
+\end{tcolorbox}
+
+\vspace{0.5cm}
+\mybox{计算圆面积}
+\begin{lstlisting}[language=Java]
+import java.util.Scanner;
+
+public class CircleArea {
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		final double PI = 3.14159;
+		double r;
+		double area;
+		
+		System.out.print("输入半径：");
+		r = scanner.nextDouble();
+		area = PI * r * r;
+		
+		System.out.println(String.format("面积 = %.2f", area));
+		scanner.close();
+	}
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果} \\
+	输入半径：5 \\
+	面积 = 78.539750
+\end{tcolorbox}
+
+\vspace{0.5cm}
+\mybox{逆序三位数}
+\begin{lstlisting}[language=Java]
+import java.util.Scanner;
+
+public class Reverse {
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		int num;
+		int a, b, c;
+
+		System.out.print("输入一个三位数：");
+		num = scanner.nextInt();
+
+		a = num / 100;
+		b = num / 10 % 10;
+		c = num % 10;
+
+		System.out.println("逆序：" + (c*100 + b*10 + a));
+		scanner.close();
+	}
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果} \\
+	输入一个正三位数：520 \\
+	逆序：25
+\end{tcolorbox}
+
+\newpage
+
+\section{类型转换}
+
+\subsection{类型转换}
+
+类型转换是把变量从一种类型转换为另一种数据类型。类型转换可以是隐式的，由编译器自动执行，也可以是显式的，通过使用强制类型转换运算符来指定。在有需要类型转换时都用上强制类型转换运算符是一种良好的编程习惯。 \\
+
+\mybox{隐式类型转换}
+\begin{lstlisting}[language=Java]
+public class Implitcit {
+	public static void main(String[] args) {
+		int a = 1;
+		double b = a;
+		System.out.println("b = " + b);
+	}
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果} \\
+	b = 2
+\end{tcolorbox}
+
+\vspace{0.5cm}
+\mybox{显式类型转换}
+\begin{lstlisting}[language=Java]
+public class Explicit {
+	public static void main(String[] args) {
+		int sum = 821;
+		int num = 10;
+		double average = (double)sum / num;
+		System.out.println(String.format("average = %.2f", average));
+	}
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果} \\
+	82.10
+\end{tcolorbox}
 
 \newpage
