@@ -20,7 +20,13 @@
 \usepackage{multirow}
 \usepackage[T1]{fontenc}
 \usepackage{longtable}
+\usepackage{newtxtt}
 % \usepackage{minted}
+
+\makeatletter
+% \renewcommand{\verbatim@font}{\usefont{T1}{newtxtt}{m}{n}}
+\newcommand{\verbatimfont}[1]{\renewcommand{\verbatim@font}{\ttfamily#1}}
+\makeatother
 
 \usetikzlibrary{calc,trees,positioning,arrows,fit,shapes}
 \usetikzlibrary{shapes.multipart,chains}

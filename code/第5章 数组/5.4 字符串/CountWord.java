@@ -3,16 +3,14 @@ import java.util.Scanner;
 public class CountWord {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		System.out.print("ÊäÈëÓ¢Óï¾ä×Ó£º");
+		System.out.print("ï¿½ï¿½ï¿½ï¿½Ó¢ï¿½ï¿½ï¿½ï¿½ï¿½Ó£ï¿½");
 		String str = scanner.nextLine();
-		
-		//"\\s+"±íÊ¾Ò»¸ö»ò¶à¸ö¿Õ¸ñ¡¢»Ø³µ¡¢ÖÆ±í·ûµÈ¿Õ°×·û
+		// "\\s+"ï¿½ï¿½Ê¾Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¸ñ¡¢»Ø³ï¿½ï¿½ï¿½ï¿½Æ±ï¿½ï¿½ï¿½ï¿½È¿Õ°×·ï¿½
 		String[] words = str.split("\\s+");
-		System.out.println("µ¥´Ê¸öÊý£º" + words.length);
+		System.out.println("ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½" + words.length);
 		for(String word : words) {
 			System.out.println("\t" + word);
 		}
-		
 		scanner.close();
 	}
 }
