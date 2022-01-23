@@ -1,7 +1,9 @@
 public class FibonacciIterative {
 	public static void main(String[] args) {
 		int n = 7;
-		System.out.println("ì³²¨ÄÇÆõÊýÁÐµÚ" + n + "Î»£º"+ fibonacci(n));
+		System.out.println(
+			"ì³²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½" + n + "Î»ï¿½ï¿½"+ fibonacci(n)
+		);
 	}
 	
 	public static int fibonacci(int n) {
