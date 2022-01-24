@@ -4,4 +4,313 @@
 
 \subsection{继承（Inheritance）}
 
-继承是面向对象的三大特征之一，程序中的继承是类与类之间的特征和行为的一种赠予或获取。两个类之间的继承必须满足“is a”的关系。子类继承自父类，父类也称基类或超类，子类也称派生类。
+继承是面向对象的三大特征之一，程序中的继承是类与类之间的特征和行为的一种赠予或获取。两个类之间的继承必须满足“is a”的关系。子类继承自父类，父类也称基类或超类，子类也称派生类。 \\
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\begin{class}{Animal}{0,0}
+			\attribute{- age}
+			\attribute{- gender}
+			\operation{+ eat() : void}
+			\operation{+ sleep() : void}
+		\end{class}
+
+		\begin{class}{Dog}{-5,-5}
+			\inherit{Animal}
+			\attribute{- type}
+			\operation{+ bite() : void}
+		\end{class}
+
+		\begin{class}{Cat}{5,-5}
+			\inherit{Animal}
+			\attribute{- hairColor}
+			\operation{+ mewing() : void}
+		\end{class}
+	\end{tikzpicture}
+	\caption{继承}
+\end{figure}
+
+产生继承关系后，子类可以使用父类中的属性和方法，也可以定义子类独有的属性和方法。
+
+\vspace{-0.5cm}
+
+\begin{lstlisting}[language=Java]
+class subclass extends superclass {
+    // code
+}
+\end{lstlisting}
+
+继承时通常使用public类型。当一个类public继承于父类时，父类的public成员也是子类的public成员，父类的protected成员也是子类的protected成员，父类的private成员不能被继承。 \\
+
+继承的好处是可以提高代码的复用性、提高代码的拓展性。 \\
+
+父类中以下内容是不可以被继承的：
+
+\begin{enumerate}
+	\item 构造方法：构造方法是为了创建当前类的对象的。
+	\item 私有成员：私有成员只能在当前的类中使用。
+	\item 跨包子类：默认权限的属性、方法，不可以继承给跨包的子类。
+\end{enumerate}
+
+\subsection{访问权限修饰符}
+
+访问权限修饰符，就是修饰类、属性的访问权限。
+
+\begin{table}[H]
+	\centering
+	\setlength{\tabcolsep}{5mm}{
+		\begin{tabular}{|c|c|c|c|c|}
+			\hline
+			\textbf{访问权限修饰符}  & \textbf{当前类} & \textbf{同包其它类} & \textbf{跨包子类} & \textbf{跨包其它类} \\
+			\hline
+			\textbf{private}         & \checkmark      & \XSolidBrush        & \XSolidBrush      & \XSolidBrush        \\
+			\hline
+			\textbf{default（不写）} & \checkmark      & \checkmark          & \XSolidBrush      & \XSolidBrush        \\
+			\hline
+			\textbf{protected}       & \checkmark      & \checkmark          & \checkmark        & \XSolidBrush        \\
+			\hline
+			\textbf{public}          & \checkmark      & \checkmark          & \checkmark        & \checkmark          \\
+			\hline
+		\end{tabular}
+	}
+	\caption{访问权限修饰符}
+\end{table}
+
+\subsection{super}
+
+使用super可以调用父类的方法。子类对象在实例化的时候，需要先实例化从父类继承到的部分，此时默认调用父类中的无参构造方法。 \\
+
+如果父类中没有无参构造方法，对所有的子类对象实例化都会造成影响，导致子类对象无法实例化。 \\
+
+解决方法有两种：
+
+\begin{enumerate}
+	\item 为父类添加无参构造方法。
+	\item 在子类的构造方法中，使用super()调用父类中的有参构造函数。
+\end{enumerate}
+
+\mybox{继承}
+
+\begin{lstlisting}[language=Java, title=Animal.java]
+public class Animal {
+    private String name;
+    private int age;
+
+    public Animal() {
+        this.name = "";
+        this.age = 0;
+    }
+
+    public Animal(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    
+    public void eat() {
+        System.out.println("吃饭");
+    }
+
+    public void sleep() {
+        System.out.println("睡觉");
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, title=Dog.java]
+public class Dog extends Animal {
+    private String type;
+
+    public Dog(String name, int age, String type) {
+        super(name, age);
+        this.type = type;
+    }
+    
+    public void bite() {
+        System.out.println("咬人");
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, title=TestDog.java]
+public class TestDog {
+    public static void main(String[] args) {
+        Dog dog = new Dog("狗子", 3, "哈士奇");
+        dog.eat();
+        dog.sleep();
+        dog.bite();
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果}
+	\begin{verbatim}
+吃饭
+睡觉
+咬人
+	\end{verbatim}
+\end{tcolorbox}
+
+\newpage
+
+\section{重写}
+
+\subsection{toString()}
+
+Object类是Java中类层次的根类，所有的类都直接或者间接地继承自Object类。Object类的toString()方法返回一个字符串，该字符串由类名、标记符【@】和此对象的哈希码的无符号十六进制表示组成。 \\
+
+\mybox{toString()}
+
+\begin{lstlisting}[language=Java, title=Dog.java]
+public class Dog extends Animal {
+    private String name;
+    private String type;
+    
+    public Dog(String name, String type) {
+        this.name = name;
+        this.type = type;
+    }   
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, title=TestDog.java]
+public class TestDog {
+    public static void main(String[] args) {
+        Dog dog = new Dog("狗子", "哈士奇");
+        System.out.println(dog);
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果}
+	\begin{verbatim}
+Dog@28a418fc
+	\end{verbatim}
+\end{tcolorbox}
+
+\subsection{重写（Override）}
+
+子类可以继承到父类中的属性和方法，但是有些方法，子类的实现与父类的方法可能实现的不同。当父类提供的方法已经不能满足子类的需求时，子类中可以定义与父类相同的方法。此时，子类方法完成对父类方法的覆盖，称为重写。 \\
+
+重写方法需要注意以下几点：
+
+\begin{enumerate}
+	\item 方法名字必须和父类方法名字相同。
+	\item 参数列表必须和父类一致。
+	\item 方法的访问权限需要大于等于父类方法的访问权限。
+	\item 方法的返回值类型需要小于等于父类方法的返回值类型。
+\end{enumerate}
+
+@Override是一个注解，用于进行重写前的校验，校验一个方法是否是一个重写的方法，如果不是重写的方法，会直接报错。 \\
+
+@Override只是对方法进行重写的验证，与这个方法是不是重写方法无关。在写重写方法的时候，这个注解最好加上。 \\
+
+\mybox{重写toString()}
+
+\begin{lstlisting}[language=Java, title=Dog.java]
+public class Dog {
+    private String name;
+    private String type;
+    
+    public Dog(String name, String type) {
+        this.name = name;
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "我叫" + this.name + "，我是一只" + this.type;
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, title=TestDog.java]
+public class TestDog {
+    public static void main(String[] args) {
+        Dog dog = new Dog("狗子", "哈士奇");
+        System.out.println(dog);
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果}
+	\begin{verbatim}
+我叫狗子，我是一只哈士奇
+	\end{verbatim}
+\end{tcolorbox}
+
+\subsection{equals()}
+
+【==】运算符默认比较的是两个对象的地址，如果地址相同则为true，否则为false。 \\
+
+equals()方法默认返回地址比较，通过重写equals()方法，可以自定义两个对象的等值比较规则。 \\
+
+\mybox{重写equals()}
+
+\begin{lstlisting}[language=Java, title=Dog.java]
+public class Dog {
+    private String name;
+    private int age;
+    private String type;
+
+    public Dog(String name, int age, String type) {
+        this.name = name;
+        this.age = age;
+        this.type = type;
+    }
+    
+    /**
+     * 自定义规则：实现两个对象的等值比较
+     * @param obj - 需要比较的对象
+     * @return 比较的结果：相同true，不同false 
+     */
+    @Override
+    public boolean equals(Object obj) {
+        // 1. 如果两个对象地址相同，返回true
+        if(this == obj) {
+            return true;
+        }
+        
+        // 2. 如果obj是null，返回false
+        if(obj == null) {
+            return false;
+        }
+        
+        // 3. 如果两个对象类型不同，返回false
+        if(this.getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        // 4. 如果两个对象中的属性全部相同，返回true，否则返回false
+        Dog dog = (Dog)obj;
+        return this.name.equals(dog.name) 
+                && this.age == dog.age 
+                && this.type.equals(dog.type);
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, title=TestDog.java]
+public class TestDog {
+    public static void main(String[] args) {
+        Dog dog1 = new Dog("狗子", 3, "哈士奇");
+        Dog dog2 = new Dog("狗子", 3, "哈士奇");
+        
+        System.out.println(dog1 == dog2);
+        System.out.println(dog1.equals(dog2));
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果}
+	\begin{verbatim}
+false
+true
+	\end{verbatim}
+\end{tcolorbox}
+
+\newpage
