@@ -1,55 +1,51 @@
 public class StringMethod {
 	public static void main(String[] args) {
-		// 1. ÅÐ¶Ï¿Õ×Ö·û´®
+		// 1. ï¿½Ð¶Ï¿ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		System.out.println("".isEmpty());
 		
-		// 2. ×Ö·û´®³¤¶È
+		// 2. ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		System.out.println("Hello World".length());
 		
-		// 3. ×Ö·û´®Æ´½Ó
+		// 3. ï¿½Ö·ï¿½ï¿½ï¿½Æ´ï¿½ï¿½
 		System.out.println("Hello".concat("World"));
 		
-		// 4. ×Ö·û´®½ØÈ¡
+		// 4. ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½È¡
 		System.out.println("Hello World".substring(4));
 		System.out.println("Hello World".substring(4, 8));
 		
-		// 5. ×Ö·û´®Ìæ»»
+		// 5. ï¿½Ö·ï¿½ï¿½ï¿½ï¿½æ»»
 		System.out.println("Hello World".replace('l', 'L'));
 		System.out.println("Hello World".replace("Hello", "Bye"));
 		
-		// 6. »ñÈ¡Ö¸¶¨Î»ÖÃ×Ö·û
+		// 6. ï¿½ï¿½È¡Ö¸ï¿½ï¿½Î»ï¿½ï¿½ï¿½Ö·ï¿½
 		System.out.println("Hello".charAt(1));
 		
-		// 7. ²éÑ¯×Ö·ûÎ»ÖÃ
+		// 7. ï¿½ï¿½Ñ¯ï¿½Ö·ï¿½Î»ï¿½ï¿½
 		System.out.println("Hello World".indexOf('l'));
 		System.out.println("Hello World".indexOf('l', 5));
 		System.out.println("Hello World".lastIndexOf('l'));
 		System.out.println("Hello World".lastIndexOf('l', 5));
 		
-		// 8. È¥³ý×Ö·û´®Ê×Î»¿Õ°××Ö·û
+		// 8. È¥ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½Õ°ï¿½ï¿½Ö·ï¿½
 		System.out.println("   Hello World   ".trim());
 		
-		// 9. ´óÐ¡Ð´×ª»»
+		// 9. ï¿½ï¿½Ð¡Ð´×ªï¿½ï¿½
 		System.out.println("Hello World".toLowerCase());
 		System.out.println("Hello World".toUpperCase());
 		
-		// 10. ÅÐ¶ÏÊÇ·ñ´æÔÚ×Ó´®
+		// 10. ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó´ï¿½
 		System.out.println("Hello World".contains("llo"));
 		
-		// 11. ÅÐ¶ÏÊÇ·ñÒÔÖ¸¶¨×Ö·û´®¿ªÍ·/½áÎ²
+		// 11. ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Í·/ï¿½ï¿½Î²
 		System.out.println("Hello World".startsWith("Hell"));
 		System.out.println("Hello World".endsWith("ld"));
 		
-		// 12. ÅÐ¶ÏÁ½¸ö×Ö·û´®ÄÚÈÝÊÇ·ñÏàÍ¬
+		// 12. ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Í¬
 		System.out.println("Hello".equals("Hello"));
-		
-		// 13. ÅÐ¶ÏÁ½¸ö×Ö·û´®ÄÚÈÝÊÇ·ñÏàÍ¬£¨ºöÂÔ´óÐ¡Ð´£©
 		System.out.println("Hello".equalsIgnoreCase("hello"));
 		
-		// 14. ±È½ÏÁ½¸ö×Ö·û´®´óÐ¡
+		// 13. ï¿½È½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡
 		System.out.println("Hello".compareTo("Hall"));
-		
-		// 15. ±È½ÏÁ½¸ö×Ö·û´®´óÐ¡£¨ºöÂÔ´óÐ¡Ð´£©
 		System.out.println("Hello".compareToIgnoreCase("HELLO"));
 	}
 }

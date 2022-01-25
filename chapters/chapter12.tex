@@ -9,12 +9,618 @@
 基本数据类型转换字符串有4种方法：
 
 \begin{enumerate}
-    \item 利用字符串拼接运算完成：当加号两端有任意一方式字符串的时候，此时会自动的把另一方也转成字符串，完成字符串的拼接。所以，当需要把一个基本数据类型转成字符串的时候，只需要在另一端拼接上一个空的字符串即可。
-    
-    \item 【推荐使用】使用字符串的静态方法valueOf()完成。
-    
-    \item 借助包装类的实例方法toString()完成。
-    
-    \item 借助包装类的静态方法toString()完成。
+	\item 利用字符串拼接运算完成：当加号两端有任意一方式字符串的时候，此时会自动的把另一方也转成字符串，完成字符串的拼接。所以，当需要把一个基本数据类型转成字符串的时候，只需要在另一端拼接上一个空的字符串即可。
+
+	\item 【推荐使用】使用字符串的静态方法valueOf()完成。
+
+	\item 借助包装类的实例方法toString()完成。
+
+	\item 借助包装类的静态方法toString()完成。
 \end{enumerate}
 
+\vspace{0.5cm}
+
+\mybox{基本数据类型转换字符串}
+
+\begin{lstlisting}[language=Java]
+public class BasicToString {
+    public static void main(String[] args) {
+        int num = 10;
+        
+        // 1. 利用字符串拼接运算完成
+        String s1 = num + "";
+        System.out.println(s1);
+        
+        // 2. 【推荐使用】使用字符串的静态方法valueOf()完成
+        String s2 = String.valueOf(num);
+        System.out.println(s2);
+        
+        // 3. 借助包装类的实例方法toString()完成
+        String s3 = Integer.valueOf(num).toString();
+        System.out.println(s3);
+        
+        // 4. 借助包装类的静态方法toString()完成
+        String s4 = Integer.toString(10);
+        System.out.println(s4);
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果}
+	\begin{verbatim}
+10
+10
+10
+10
+	\end{verbatim}
+\end{tcolorbox}
+
+\subsection{字符串转换基本数据类型}
+
+字符串转换基本数据类型，就是解析出字符串中的内容，转型成对应的基本数据类型的表示。 \\
+
+需要注意的是，基本数据类型转字符串肯定是没有问题的，但是由字符串类型转换基本数据类型的时候，可能会出现问题。字符串中的内容不一定能够转成希望转换的基本数据类型。如果转换失败，会出现NumberFormatException异常。 \\
+
+还需要注意的是，对于整数来说，字符串中如果出现了其它的非数字的字符串，都会导致转整数失败。即便是小数点，也不可以转换，因为这里并没有转成浮点数再转成整数的过程。 \\
+
+字符串转换基本数据类型的方法有2种：
+
+\begin{enumerate}
+	\item 使用包装类的静态方法valueOf()完成。
+	\item 使用包装类的静态方法parseXXX()完成。
+\end{enumerate}
+
+\mybox{字符串转换基本数据类型}
+
+\begin{lstlisting}[language=Java]
+public class StringToBasic {
+    public static void main(String[] args) {
+        // 1. 使用包装类的静态方法valueOf()完成
+        Integer num1 = Integer.valueOf("10");
+        System.out.println(num1);
+        
+        // 2. 使用包装类的静态方法parseXXX()完成
+        int num2 = Integer.parseInt("10");
+        System.out.println(num2);
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果}
+	\begin{verbatim}
+10
+10
+	\end{verbatim}
+\end{tcolorbox}
+
+以上两种方法都可以完成字符串到基本数据类型之间的转换。如果希望直接转成基本数据类型，推荐使用方法2；如果希望得到包装类型，推荐使用方法1。
+
+\newpage
+
+\section{字符串内存分析}
+
+\subsection{字符串内存分析}
+
+字符串是一个引用数据类型，但是字符串的引用与在面向对象部分的引用有一点差别。对于类的对象，是在堆上开辟的空间，而字符串，是在常量池中开辟的空间。 \\
+
+例如\lstinline|String str = "hello"|，"hello"是在常量池中开辟的空间，而str里面存储的其实是常量池中"hello"的地址。当\lstinline|String str = "world"|时，并不是修改了str指向的空间的内容。因为常量池空间特性，一个空间一旦开辟完成了，里面的值是不允许修改的。此时，是在常量池中开辟了一块新的空间，存储了"world"，并把这个新的空间的地址赋值给str。 \\
+
+\mybox{字符串内存分析}
+
+\begin{lstlisting}[language=Java]
+public class StringMemory {
+    public static void main(String[] args) {
+        // 第一次使用"hello world"时，常量池中并没有这块内存
+        // 此时开辟一块新空间存储"hello world"，将其地址赋给s1
+        String s1 = "hello world";
+        // 再次使用"hello world"时，常量池中已经存在这块内存
+        // 此时无需开辟新空间，直接将现有空间地址赋给s2
+        String s2 = "hello world";
+        // s1和s2都指向"hello world"
+        System.out.println(s1 == s2);
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果}
+	\begin{verbatim}
+true
+	\end{verbatim}
+\end{tcolorbox}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\draw (-4,-5.5) rectangle (-2,-4.5);
+		\draw (2,-5.5) rectangle (4,-4.5);
+		\draw (-3,-4) node {s1};
+		\draw (3,-4) node {s2};
+
+		\draw (-1.5,-7) rectangle (1.5,-6);
+		\draw (0,-6.5) node {hello world};
+		\draw (0,-7.5) node {常量池};
+
+		\draw[->] (-2,-5) -- (-0.5,-6);
+		\draw[->] (2,-5) -- (0.5,-6);
+	\end{tikzpicture}
+	\caption{常量池}
+\end{figure}
+
+String类是Java中用来描述字符串的类，里面也是有构造方法的。通过String类提供的构造方法，实例化的字符串对象是在堆上开辟的空间。在堆空间中，有一个内部维护的属性，指向了常量池中的某一块空间。 \\
+
+\mybox{实例化字符串}
+
+\begin{lstlisting}[language=Java]
+public class InstantiateString {
+    public static void main(String[] args) {
+        // 在堆上开辟了一个String对象的空间，将堆的地址赋给s1
+        // 堆空间中有一个内部的属性，指向常量池中的"hello world"
+        String s1 = new String("hello world");
+        // 在堆上开辟了一个String对象的空间，将堆的地址赋给s2
+        // 堆空间中有一个内部的属性，指向常量池中的"hello world"
+        String s2 = new String("hello world");
+        
+        // 此时s1和s2是两块堆空间的地址
+        System.out.println(s1 == s2);
+        // String类中重写了equals()，实现了比较实际指向常量池中的字符串
+        System.out.println(s1.equals(s2));
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果}
+	\begin{verbatim}
+false
+true
+	\end{verbatim}
+\end{tcolorbox}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\draw (-4,-5.5) rectangle (-2,-4.5);
+		\draw (2,-5.5) rectangle (4,-4.5);
+		\draw (-3,-4) node {s1};
+		\draw (3,-4) node {s2};
+
+		\draw (-3,-8) rectangle (3,-6);
+		\draw (0,-5.5) node {堆};
+		\draw (-2.7,-7.5) rectangle (-0.3,-6.5);
+		\draw (-1.5,-7) node {String对象};
+		\draw (0.3,-7.5) rectangle (2.7,-6.5);
+		\draw (1.5,-7) node {String对象};
+
+		\draw[->] (-2,-5) -- (-1.5,-6.5);
+		\draw[->] (2,-5) -- (1.5,-6.5);
+
+		\draw (-1.5,-11) rectangle (1.5,-9);
+		\draw (0,-9.5) node {hello world};
+		\draw (0,-10.5) node {常量池};
+
+		\draw[->] (-1.5,-7.5) -- (-0.5,-9);
+		\draw[->] (1.5,-7.5) -- (0.5,-9);
+	\end{tikzpicture}
+	\caption{实例化字符串}
+\end{figure}
+
+\newpage
+
+\section{字符串构造方法}
+
+\subsection{字符串构造方法}
+
+\begin{table}[H]
+	\centering
+	\setlength{\tabcolsep}{2mm}{
+		\begin{tabular}{|l|l|}
+			\hline
+			\textbf{构造方法}                         & \textbf{描述}                        \\
+			\hline
+			String()                                  & 实例化一个空的字符串对象             \\
+			\hline
+			String(String str)                        & 通过一个字符串，实例化字符串         \\
+			\hline
+			String(char[] arr)                        & 通过字符数组，实例化字符串           \\
+			\hline
+			String(char[] arr, int offset, int count) & 通过指定范围的字符数组，实例化字符串 \\
+			\hline
+			String(byte[] arr)                        & 通过字节数组，实例化字符串           \\
+			\hline
+			String(byte[] arr, int offset, int count) & 通过指定范围的字节数组，实例化字符串 \\
+			\hline
+		\end{tabular}
+	}
+	\caption{字符串构造方法}
+\end{table}
+
+\mybox{字符串构造方法}
+
+\begin{lstlisting}[language=Java]
+public class StringConstructor {
+    public static void main(String[] args) {
+        String s1 = new String();
+        System.out.println("s1: " + s1);
+        
+        String s2 = new String("hello");
+        System.out.println("s2: " + s2);
+        
+        String s3 = new String(new char[] {'h', 'e', 'l', 'l', 'o'});
+        System.out.println("s3: " + s3);
+        
+        String s4 = new String(
+            new char[] {'h', 'e', 'l', 'l', 'o'}, 1, 3
+        );
+        System.out.println("s4: " + s4);
+        
+        String s5 = new String(new byte[] {65, 66, 67});
+        System.out.println("s5: " + s5);
+        
+        String s6 = new String(new byte[] {65, 66, 67}, 0, 2);
+        System.out.println("s6: " + s6);
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果}
+	\begin{verbatim}
+s1: 
+s2: hello
+s3: hello
+s4: ell
+s5: ABC
+s6: AB
+	\end{verbatim}
+\end{tcolorbox}
+
+\newpage
+
+\section{字符串非静态方法}
+
+\subsection{字符串非静态方法}
+
+因为字符串是常量，任何修改字符串的操作都不会对所修改的字符串造成任何的影响。所有对字符串的修改操作，其实都是实例化了新的字符串对象，在这个新的字符串对象中存储了修改之后的结果，并将这个新的字符串以返回值的形式返回。所以，如果需要得到对一个字符串修改之后的结果，需要接收方法的返回值。 \\
+
+\begin{table}[H]
+	\centering
+	\setlength{\tabcolsep}{1mm}{
+		\begin{tabular}{|l|l|}
+			\hline
+			\textbf{方法}                                & \textbf{描述}                     \\
+			\hline
+			.concat(String str)                          & 字符串拼接                        \\
+			\hline
+			.substring(int beginIndex)                   & 字符串截取                        \\
+			\hline
+			.substring(int beginIndex, int endIndex)     & 字符串截取                        \\
+			\hline
+			.replace(char oldChar, char new Char)        & 字符替换                          \\
+			\hline
+			.replace(CharSequence old, CharSequence new) & 字符序列替换                      \\
+			\hline
+			.charAt(int index)                           & 获取指定位置的字符                \\
+			\hline
+			.indexOf(char c)                             & 字符第一次出现的下标              \\
+			\hline
+			.indexOf(char c, int fromIndex)              & 字符从fromIndex第一次出现的下标   \\
+			\hline
+			.lastIndexOf(char c)                         & 字符最后一次出现的下标            \\
+			\hline
+			.lastIndexOf(char c, int fromIndex)          & 字符从fromIndex往前最后出现的下标 \\
+			\hline
+		\end{tabular}
+	}
+	\caption{字符串非静态方法}
+\end{table}
+
+\mybox{字符串非静态方法}
+
+\begin{lstlisting}[language=Java]
+public class StringMethod {
+    public static void main(String[] args) {
+        // 1. 判断空字符串
+        System.out.println("".isEmpty());
+        
+        // 2. 字符串长度
+        System.out.println("Hello World".length());
+        
+        // 3. 字符串拼接
+        System.out.println("Hello".concat("World"));
+        
+        // 4. 字符串截取
+        System.out.println("Hello World".substring(4));
+        System.out.println("Hello World".substring(4, 8));
+        
+        // 5. 字符串替换
+        System.out.println("Hello World".replace('l', 'L'));
+        System.out.println("Hello World".replace("Hello", "Bye"));
+        
+        // 6. 获取指定位置字符
+        System.out.println("Hello".charAt(1));
+        
+        // 7. 查询字符位置
+        System.out.println("Hello World".indexOf('l'));
+        System.out.println("Hello World".indexOf('l', 5));
+        System.out.println("Hello World".lastIndexOf('l'));
+        System.out.println("Hello World".lastIndexOf('l', 5));
+        
+        // 8. 去除字符串首位空白字符
+        System.out.println("   Hello World   ".trim());
+        
+        // 9. 大小写转换
+        System.out.println("Hello World".toLowerCase());
+        System.out.println("Hello World".toUpperCase());
+        
+        // 10. 判断是否存在子串
+        System.out.println("Hello World".contains("llo"));
+        
+        // 11. 判断是否以指定字符串开头/结尾
+        System.out.println("Hello World".startsWith("Hell"));
+        System.out.println("Hello World".endsWith("ld"));
+        
+        // 12. 判断两个字符串内容是否相同
+        System.out.println("Hello".equals("Hello"));
+        System.out.println("Hello".equalsIgnoreCase("hello"));
+        
+        // 13. 比较两个字符串大小
+        System.out.println("Hello".compareTo("Hall"));
+        System.out.println("Hello".compareToIgnoreCase("HELLO"));
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果}
+	\begin{verbatim}
+true
+11
+HelloWorld
+o World
+o Wo
+HeLLo WorLd
+Bye World
+e
+2
+9
+9
+3
+Hello World
+hello world
+HELLO WORLD
+true
+true
+true
+true
+true
+4
+0
+	\end{verbatim}
+\end{tcolorbox}
+
+\newpage
+
+\section{字符串静态方法}
+
+\subsection{字符串静态方法}
+
+\begin{table}[H]
+	\centering
+	\setlength{\tabcolsep}{1mm}{
+		\begin{tabular}{|l|l|}
+			\hline
+			\textbf{方法}                                        & \textbf{描述}              \\
+			\hline
+			.join(CharSequence delimiter, CharSequence elements) & 以指定分隔符拼接若干字符串 \\
+			\hline
+			.format(String format, Object... args)               & 字符串格式化               \\
+			\hline
+		\end{tabular}
+	}
+	\caption{字符串静态方法}
+\end{table}
+
+format()方法的占位符如下：
+
+\begin{table}[H]
+	\centering
+	\setlength{\tabcolsep}{5mm}{
+		\begin{tabular}{|c|l|}
+			\hline
+			\textbf{占位符} & \textbf{描述}                                 \\
+			\hline
+			\%s             & 代替字符串，\%ns表示凑够n位，如果不够补空格   \\
+			\hline
+			\%d             & 代替整型数字，\%nd表示凑够n位，如果不够补空格 \\
+			\hline
+			\%f             & 代替浮点型数字，\%.nf表示保留小数点后n位数字  \\
+			\hline
+			\%c             & 代替字符                                      \\
+			\hline
+		\end{tabular}
+	}
+	\caption{字符串格式化占位符}
+\end{table}
+
+\mybox{字符串静态方法}
+
+\begin{lstlisting}[language=Java]
+public class StringStaticMethod {
+    public static void main(String[] args) {
+        // join()：字符串拼接
+        String[] info = {"2021", "3", "28"};
+        String date = String.join("/", info);
+        System.out.println(date);
+
+        // format()：字符串格式化
+        String name = "小灰";
+        int age = 18;
+        char gender = 'M';
+        double height = 178.2;
+        System.out.println(String.format(
+                "姓名：%s，年龄：%d，性别：%c，身高：%.2f", 
+                name, age, gender, height));
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果}
+	\begin{verbatim}
+2021/3/28
+姓名：小灰，年龄：18，性别：M，身高：178.20
+	\end{verbatim}
+\end{tcolorbox}
+
+\newpage
+
+\section{StringBuffer与StringBuilder}
+
+\subsection{StringBuffer / StringBuilder}
+
+字符串是常量，所有操作字符串的方法都不能直接修改字符串本身。如果需要得到修改之后的结果，就需要接收返回值。 \\
+
+StringBuffer和StringBuilder类不是字符串类，而是用来操作字符串的类。在类中维护了一个字符串的属性，这些字符串操作类中的方法，可以直接修改这个属性的值。对于使用方来说，可以不去通过返回值获取操作的结果。
+
+\begin{table}[H]
+	\centering
+	\setlength{\tabcolsep}{1mm}{
+		\begin{tabular}{|l|l|}
+			\hline
+			\textbf{方法}                           & \textbf{描述}                            \\
+			\hline
+			构造方法()                              & 实例化空字符串操作类对象                 \\
+			\hline
+			构造方法(String str)                    & 实例化指定字符串操作类对象               \\
+			\hline
+			append()                                & 将一个数据拼接到现有的字符串的结尾       \\
+			\hline
+			insert()                                & 将一个数据插入到字符串的指定位置         \\
+			\hline
+			delete(int start, int end)              & 删除一个字符串指定范围内的数据           \\
+			\hline
+			deleteCharAt(int index)                 & 删除指定下标位置的字符                   \\
+			\hline
+			replace(int start, int end, String str) & 将字符串指定范围内的数据替换成指定字符串 \\
+			\hline
+			setCharAt(int index, char c)            & 将指定下标位置的字符串替换成新的字符     \\
+			\hline
+			reverse()                               & 翻转字符串                               \\
+			\hline
+			toString()                              & 返回一个正在操作的字符串                 \\
+			\hline
+		\end{tabular}
+	}
+	\caption{StringBuffer / StringBuilder类常用方法}
+\end{table}
+
+\mybox{StringBuffer / StringBuilder}
+
+\begin{lstlisting}[language=Java]
+public class TestStringBuffer {
+    public static void main(String[] args) {
+        StringBuffer sb = new StringBuffer("hello");
+        System.out.println(sb);
+        
+        sb.append("world!");
+        System.out.println(sb);
+        
+        sb.insert(5, ", ");
+        System.out.println(sb);
+        
+        sb.delete(5, 7);
+        System.out.println(sb);
+        
+        sb.replace(0, 5, "Hi");
+        System.out.println(sb);
+        
+        sb.setCharAt(2, 'W');
+        System.out.println(sb);
+        
+        sb.reverse();
+        System.out.println(sb);
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果}
+	\begin{verbatim}
+hello
+helloworld!
+hello, world!
+helloworld!
+Hiworld!
+HiWorld!
+!dlroWiH
+	\end{verbatim}
+\end{tcolorbox}
+
+\subsection{StringBuffer与StringBuilder的区别}
+
+StringBuffer和StringBuilder类从功能上来讲是一模一样的，但是他们还是有区别的：
+
+\begin{itemize}
+	\item StringBuffer是线程安全的：当处于多线程的环境中，多个线程同时操作这个对象，此时使用StringBuffer类。
+
+	\item StringBuilder是线程不安全的：当没有处于多线程的环境中，只有一个线程来操作这个对象，此时使用StringBuilder类。
+\end{itemize}
+
+但凡是涉及到字符串操作的使用场景，特别是在循环中对字符串进行的操作，一定不要使用字符串的方法，而要使用StringBuffer或者StringBuilder的方法来做。 \\
+
+由于字符串本身是不可变的，所以String类所有的修改操作，其实都是在方法内实例化了一个新的字符串对象，存储修改之后的新的字符串的地址，返回这个新的字符串。如果操作比较频繁，就意味着有大量的临时字符串被实例化、被销毁，效率极低。 \\
+
+StringBuffer和StringBuilder类不同，它们在内部维护了一个字符数组，所有的操作都是围绕这个字符数组进行的。当需要转成字符串的时候，才会调用toString()进行转换。当频繁用到字符串操作的时候，没有中间的临时字符串出现，效率较高。 \\
+
+\mybox{比较String、StringBuffer、StringBuilder类的效率}
+
+\begin{lstlisting}[language=Java]
+public class CompareEfficiency {
+    public static void main(String[] args) {
+        final int CNT = 100000;
+        
+        String str = new String();
+        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuilder = new StringBuilder();
+        long start, end;
+        
+        // String拼接
+        start = System.currentTimeMillis();
+        for(int i = 0; i < CNT; i++) {
+            str += i;
+        }
+        end = System.currentTimeMillis();
+        System.out.println("String拼接：" + (end - start));
+        
+        // StringBuffer拼接
+        start = System.currentTimeMillis();
+        for(int i = 0; i < CNT; i++) {
+            stringBuffer.append(i);
+        }
+        end = System.currentTimeMillis();
+        System.out.println("StringBuffer拼接：" + (end - start));
+        
+        // StringBuilder拼接
+        start = System.currentTimeMillis();
+        for(int i = 0; i < CNT; i++) {
+            stringBuilder.append(i);
+        }
+        end = System.currentTimeMillis();
+        System.out.println("StringBuilder拼接：" + (end - start));
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果}
+	\begin{verbatim}
+String拼接：4326
+StringBuffer拼接：2
+StringBuilder拼接：2
+	\end{verbatim}
+\end{tcolorbox}
+
+\newpage
