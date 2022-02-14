@@ -4,9 +4,9 @@
 
 \subsection{异常（Exception）}
 
-异常就是程序在运行过程中出现的非正常的情况。异常本身是一个类，产生异常就是创建异常对象并抛出一个异常对象。Java处理异常的方法是中断处理。 \\
+异常就是程序在运行过程中出现的非正常的情况。异常本身是一个类，产生异常就是创建异常对象并抛出一个异常对象。Java处理异常的方法是中断处理。\\
 
-如果程序遇到了未经处理的异常，会导致这个程序无法进行编译或者运行。 \\
+如果程序遇到了未经处理的异常，会导致这个程序无法进行编译或者运行。\\
 
 Throwable类用来描述所有的不正常的情况。Throwable有两个子类：
 
@@ -70,7 +70,7 @@ java.lang.ArrayIndexOutOfBoundsException:
 	\end{verbatim}
 \end{tcolorbox}
 
-普通的异常会导致程序无法完成编译，这样的异常被称为非运行时异常（non-runtime exception），但是由于异常是发生在编译时期的，因此常常称为编译时异常。 \\
+普通的异常会导致程序无法完成编译，这样的异常被称为非运行时异常（non-runtime exception），但是由于异常是发生在编译时期的，因此常常称为编译时异常。\\
 
 Exception类有一个子类RuntimeException类对异常进了自动的处理，这种异常不会影响程序的编译，但是在运行中如果遇到了这种异常，会导致程序执行的强制停止。这样的异常被称为运行时异常。
 
@@ -99,7 +99,7 @@ try {
 	\includegraphics{img/C10/10-2/1.png}
 \end{figure}
 
-如果在try结构中出现了异常，那么从异常出现的位置开始，try结构中往后的代码将不再执行。 \\
+如果在try结构中出现了异常，那么从异常出现的位置开始，try结构中往后的代码将不再执行。\\
 
 \mybox{捕获数组越界异常}
 
@@ -124,9 +124,11 @@ public class TryCatch {
 	\end{verbatim}
 \end{tcolorbox}
 
+\vspace{0.5cm}
+
 \subsection{finally}
 
-finally出现在try-catch结构的结尾，无论try代码段中有没有异常、无论try里面出现的异常有没有被捕获处理，finally中的代码始终会执行。基于这个特点，常常在finally中进行资源释放、流的关闭等操作。 \\
+finally出现在try-catch结构的结尾，无论try代码段中有没有异常、无论try里面出现的异常有没有被捕获处理，finally中的代码始终会执行。基于这个特点，常常在finally中进行资源释放、流的关闭等操作。\\
 
 \mybox{finally}
 
@@ -159,11 +161,13 @@ public class Finally {
 	\end{verbatim}
 \end{tcolorbox}
 
+\vspace{0.5cm}
+
 \subsection{catch}
 
-如果多个catch捕获的异常类型之间没有继承关系存在，此时先后顺序无所谓。 \\
+如果多个catch捕获的异常类型之间没有继承关系存在，此时先后顺序无所谓。\\
 
-如果多个catch捕获的异常类型之间存在继承关系，则必须保证父类异常在后，子类异常在前。 \\
+如果多个catch捕获的异常类型之间存在继承关系，则必须保证父类异常在后，子类异常在前。\\
 
 \mybox{catch}
 
@@ -276,13 +280,13 @@ public class Person {
 
 \subsection{自定义异常}
 
-使用异常是为了处理一些重大的逻辑bug，这些逻辑bug可能会导致程序的崩溃。此时，可以使用异常机制，强迫修改这个bug。 \\
+使用异常是为了处理一些重大的逻辑bug，这些逻辑bug可能会导致程序的崩溃。此时，可以使用异常机制，强迫修改这个bug。\\
 
-系统中提供了很多的异常类型，但是异常类型提供地再多，也无法满足所有的需求。当需要的异常类型系统没有提供的时候，此时就需要自定义异常了。 \\
+系统中提供了很多的异常类型，但是异常类型提供地再多，也无法满足所有的需求。当需要的异常类型系统没有提供的时候，此时就需要自定义异常了。\\
 
-系统提供的每一种异常都是一个类，所以自定义异常其实就是写一个自定义的异常类。自定义的异常类，理论上来讲，类名可以任意定义，但是出于规范，一般都会以Exception作为结尾，例如ArrayIndexOutOfBoundsException、NullPointerException、ArithmeticException等。 \\
+系统提供的每一种异常都是一个类，所以自定义异常其实就是写一个自定义的异常类。自定义的异常类，理论上来讲，类名可以任意定义，但是出于规范，一般都会以Exception作为结尾，例如ArrayIndexOutOfBoundsException、NullPointerException、ArithmeticException等。\\
 
-如果要自定义一个编译时异常，需要继承自Exception类，如果要自定义一个运行时异常，需要继承自RuntimeException类。 \\
+如果要自定义一个编译时异常，需要继承自Exception类，如果要自定义一个运行时异常，需要继承自RuntimeException类。\\
 
 \mybox{自定义异常}
 

@@ -36,6 +36,8 @@ float[] grade = new float[50];
 	\item 下标 / 索引（index）：元素的位置，下标从0开始，必须为非负整数
 \end{itemize}
 
+\vspace{0.5cm}
+
 \subsection{数组初始化}
 
 一维数组可以在声明时进行初始化：
@@ -47,7 +49,7 @@ int[] arr = {3, 6, 8, 2, 4, 0, 9, 7, 1, 5};
 int[] arr = new int[] {3, 6, 8, 2, 4, 0, 9, 7, 1, 5};
 \end{lstlisting}
 
-很多时候在使用数组之前需要将数组的内容全部清空，这可以利用循环来实现。 \\
+很多时候在使用数组之前需要将数组的内容全部清空，这可以利用循环来实现。\\
 
 \mybox{一维数组初始化}
 
@@ -94,6 +96,8 @@ max = 9
 min = 0
 	\end{verbatim}
 \end{tcolorbox}
+
+\vspace{0.5cm}
 
 \subsection{for-each}
 
@@ -184,9 +188,9 @@ public class Init2dArr {
 
 \vspace{0.5cm}
 
-矩阵的加法/减法是指两个矩阵把其相对应元素进行加减的运算。 \\
+矩阵的加法/减法是指两个矩阵把其相对应元素进行加减的运算。\\
 
-矩阵加法：两个$ m \times n $矩阵A和B的和，标记为$ A + B $，结果为一个$ m \times n $的矩阵，其内的各元素为其相对应元素相加后的值。 \\
+矩阵加法：两个$ m \times n $矩阵A和B的和，标记为$ A + B $，结果为一个$ m \times n $的矩阵，其内的各元素为其相对应元素相加后的值。\\
 
 矩阵减法：两个$ m \times n $矩阵A和B的差，标记为$ A - B $，结果为一个$ m \times n $的矩阵，其内的各元素为其相对应元素相减后的值。
 
@@ -298,7 +302,7 @@ public class Matrix {
 
 \subsection{字符（Character）}
 
-单个的字符是一种特殊的类型，是用单引号表示字符字面量。每一个字符都有其对应的码值。 \\
+单个的字符是一种特殊的类型，是用单引号表示字符字面量。每一个字符都有其对应的码值。\\
 
 ASCII全称American Standard Code for Information Interchange（美国信息交换标准代码），一共定义了128个字符。
 
@@ -419,7 +423,7 @@ public class ASCII {
 	\caption{字符串引用}
 \end{figure}
 
-通过调用Scanner类中的nextLine()可以获取用户输入的字符串。 \\
+通过调用Scanner类中的nextLine()可以获取用户输入的字符串。\\
 
 \mybox{创建字符串对象}
 
@@ -486,6 +490,8 @@ s1与s2内容相同
 s1与s2忽略大小写内容相同
 	\end{verbatim}
 \end{tcolorbox}
+
+\vspace{0.5cm}
 
 \subsection{字符串操作}
 
@@ -689,7 +695,7 @@ He##o World!
 
 \subsubsection{split(regex)：字符串分割}
 
-根据匹配给定的正则表达式拆分字符串，返回拆分后的字符串数组。 \\
+根据匹配给定的正则表达式拆分字符串，返回拆分后的字符串数组。\\
 
 \mybox{字符串替换}
 
@@ -721,21 +727,17 @@ string.
 
 \begin{lstlisting}[language=Java]
 import java.util.Scanner;
-
 public class CountWord {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("输入英语句子：");
 		String str = scanner.nextLine();
-
 		// "\\s+"表示一个或多个空格、回车、制表符等空白符
 		String[] words = str.split("\\s+");
 		System.out.println("单词个数：" + words.length);
-		
         for(String word : words) {
 			System.out.println("\t" + word);
 		}
-        
 		scanner.close();
 	}
 }

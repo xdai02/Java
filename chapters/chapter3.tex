@@ -28,6 +28,8 @@
 	\caption{关系运算符}
 \end{table}
 
+\vspace{0.5cm}
+
 \subsection{逻辑运算符}
 
 Java中逻辑运算符有三种：
@@ -99,14 +101,15 @@ Java中逻辑运算符有三种：
 
 \subsection{if}
 
-当if语句的条件为真时，进入花括号执行内部的代码；若条件为假，则跳过花括号执行后面的代码。 \\
+当if语句的条件为真时，进入花括号执行内部的代码；若条件为假，则跳过花括号执行后面的代码。\\
 
 if语句主要有以下几种形式：
 
-\begin{itemize}
-	\item 单分支
-	      \vspace{-0.5cm}
-	      \begin{lstlisting}[language=Java]
+\subsubsection{单分支}
+
+\vspace{-1cm}
+
+\begin{lstlisting}[language=Java]
 public class IfStmt {
 	public static void main(String[] args) {
 		int age = 15;
@@ -117,9 +120,11 @@ public class IfStmt {
 }
 \end{lstlisting}
 
-	\item 双分支
-	      \vspace{-0.5cm}
-	      \begin{lstlisting}[language=Java]
+\subsubsection{双分支}
+
+\vspace{-1cm}
+
+\begin{lstlisting}[language=Java]
 public class IfElse {
 	public static void main(String[] args) {
 		int age = 30;
@@ -132,9 +137,11 @@ public class IfElse {
 }
 \end{lstlisting}
 
-	\item 多分支
-	      \vspace{-0.5cm}
-	      \begin{lstlisting}[language=Java]
+\subsubsection{多分支}
+
+\vspace{-1cm}
+
+\begin{lstlisting}[language=Java]
 public class IfElseifElse {
 	public static void main(String[] args) {
 		int score = 76;
@@ -149,7 +156,8 @@ public class IfElseifElse {
 	}
 }
 \end{lstlisting}
-\end{itemize}
+
+\vspace{0.5cm}
 
 \subsection{嵌套结构}
 
@@ -223,7 +231,7 @@ switch(表达式) {
 }
 \end{lstlisting}
 
-根据表达式的值，跳转到对应的case处进行执行。需要注意的是，当对应的case中的代码被执行完后，并不会跳出switch，而是会继续执行后面的代码，所以需要使用break跳出switch结构。当所有case都不满足表达式的值时，会执行default语句中的代码，相当于if-else结构中的else。 \\
+根据表达式的值，跳转到对应的case处进行执行。需要注意的是，当对应的case中的代码被执行完后，并不会跳出switch，而是会继续执行后面的代码，所以需要使用break跳出switch结构。当所有case都不满足表达式的值时，会执行default语句中的代码，相当于if-else结构中的else。\\
 
 \mybox{根据月份输出对应的英语简写}
 

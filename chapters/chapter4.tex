@@ -39,9 +39,9 @@
 
 \subsection{while}
 
-在while循环中，当条件满足时重复循环体内的语句。如果条件永远为真，循环会永无止境的进行下去（死循环），因此循环体内要有改变条件的机会。 \\
+在while循环中，当条件满足时重复循环体内的语句。如果条件永远为真，循环会永无止境的进行下去（死循环），因此循环体内要有改变条件的机会。\\
 
-控制循环次数的方法就是设置循环变量：初值、判断、更新。 \\
+控制循环次数的方法就是设置循环变量：初值、判断、更新。\\
 
 while循环的特点是先判断、再执行，所以循环体有可能会进入一次或多次，也有可能一次也不会进入。
 
@@ -84,14 +84,14 @@ public class Height {
 
 \begin{tcolorbox}
 	\mybox{运行结果}
-	\begin{verbatim}
+\begin{verbatim}
 输入第1个人的身高：160.8
 输入第2个人的身高：175.2
 输入第3个人的身高：171.2
 输入第4个人的身高：181.3
 输入第5个人的身高：164
 平均身高：170.5
-    \end{verbatim}
+\end{verbatim}
 \end{tcolorbox}
 
 \newpage
@@ -100,7 +100,7 @@ public class Height {
 
 \subsection{do-while}
 
-do-while循环在进入循环的时候不做检查，而是在执行完一轮循环体的代码之后，再来检查循环的条件是否满足，如果满足则继续下一轮循环，不满足则结束循环，即至少执行一次循环。 \\
+do-while循环在进入循环的时候不做检查，而是在执行完一轮循环体的代码之后，再来检查循环的条件是否满足，如果满足则继续下一轮循环，不满足则结束循环，即至少执行一次循环。\\
 
 do-while循环的主要特点是先执行、再判断。
 
@@ -141,11 +141,13 @@ public class Digits {
 
 \begin{tcolorbox}
 	\mybox{运行结果}
-	\begin{verbatim}
+\begin{verbatim}
 输入整数：123
 位数：3
-    \end{verbatim}
+\end{verbatim}
 \end{tcolorbox}
+
+\vspace{0.5cm}
 
 \subsection{while与do-while区别}
 
@@ -161,7 +163,7 @@ while循环与do-while循环有以下区别：
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.2]{img/C4/4-3/1.png}
+	\includegraphics[scale=0.15]{img/C4/4-3/1.png}
 \end{figure}
 
 \mybox{猜数字}
@@ -195,7 +197,7 @@ public class GuessNumber {
 
 \begin{tcolorbox}
 	\mybox{运行结果}
-	\begin{verbatim}
+\begin{verbatim}
 猜一个1-100之间的数字：50
 猜大了！
 猜一个1-100之间的数字：25
@@ -210,7 +212,7 @@ public class GuessNumber {
 猜小了！
 猜一个1-100之间的数字：49
 猜对了！你一共用了7次猜对！
-    \end{verbatim}
+\end{verbatim}
 \end{tcolorbox}
 
 \newpage
@@ -253,9 +255,9 @@ public class Sum {
 
 \begin{tcolorbox}
 	\mybox{运行结果}
-	\begin{verbatim}
+\begin{verbatim}
 5050
-    \end{verbatim}
+\end{verbatim}
 \end{tcolorbox}
 
 \vspace{0.5cm}
@@ -286,10 +288,10 @@ public class InverseSum {
 
 \begin{tcolorbox}
 	\mybox{运行结果}
-	\begin{verbatim}
+\begin{verbatim}
 输入n：10
 2.928968
-    \end{verbatim}
+\end{verbatim}
 \end{tcolorbox}
 
 \vspace{0.5cm}
@@ -336,17 +338,19 @@ public class Fibonacci {
 
 \begin{tcolorbox}
 	\mybox{运行结果}
-	\begin{verbatim}
+\begin{verbatim}
 输入斐波那契数列长度：10
 1, 1, 2, 3, 5, 8, 13, 21, 34, 55
-    \end{verbatim}
+\end{verbatim}
 \end{tcolorbox}
+
+\vspace{0.5cm}
 
 \subsection{嵌套循环}
 
-循环也可以进行嵌套使用。 \\
+循环也可以进行嵌套使用。\\
 
-\mybox{九九乘法表} \\
+\mybox{九九乘法表}\\
 
 \begin{table}[H]
 	\centering
@@ -422,11 +426,11 @@ public class Stars {
 
 \subsection{循环控制}
 
-循环控制语句的作用是控制当前的循环结构是否继续向下执行，如果不进行控制，那么会根据既定的结构重复执行。如果有一些特殊的情况导致循环的执行中断，就称为循环的控制语句。循环控制语句的关键字有break和continue。 \\
+循环控制语句的作用是控制当前的循环结构是否继续向下执行，如果不进行控制，那么会根据既定的结构重复执行。如果有一些特殊的情况导致循环的执行中断，就称为循环的控制语句。循环控制语句的关键字有break和continue。\\
 
-break的作用是跳出当前循环，执行当前循环之后的语句。break只能跳出一层循环，如果是嵌套循环，那么需要按照嵌套的层次，逐步使用break来跳出。break语句只能在循环体内和switch语句内使用。 \\
+break的作用是跳出当前循环，执行当前循环之后的语句。break只能跳出一层循环，如果是嵌套循环，那么需要按照嵌套的层次，逐步使用break来跳出。break语句只能在循环体内和switch语句内使用。\\
 
-continue的作用是跳过本轮循环，开始下一轮循环的条件判断。continue终止当前轮的循环过程，但它并不跳出循环。 \\
+continue的作用是跳过本轮循环，开始下一轮循环的条件判断。continue终止当前轮的循环过程，但它并不跳出循环。\\
 
 \mybox{break}
 
@@ -445,9 +449,9 @@ public class Break {
 
 \begin{tcolorbox}
 	\mybox{运行结果}
-	\begin{verbatim}
+\begin{verbatim}
 1 2 3 4
-    \end{verbatim}
+\end{verbatim}
 \end{tcolorbox}
 
 \vspace{0.5cm}
@@ -469,9 +473,9 @@ public class Continue {
 
 \begin{tcolorbox}
 	\mybox{运行结果}
-	\begin{verbatim}
+\begin{verbatim}
 1 2 3 4 6 7 8 9 10
-    \end{verbatim}
+\end{verbatim}
 \end{tcolorbox}
 
 \newpage
