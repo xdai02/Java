@@ -1,18 +1,18 @@
 import java.util.Scanner;
 
-public class CircleArea {
+public class RectangleArea {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		double length, width;
 		double area;
 		
-		System.out.print("ÊäÈë³¤¶È£º");
+		System.out.print("ï¿½ï¿½ï¿½ë³¤ï¿½È£ï¿½");
 		length = scanner.nextDouble();
-		System.out.print("ÊäÈë¿í¶È£º");
+		System.out.print("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½");
 		width = scanner.nextDouble();
 		area = length * width;
 		
-		System.out.println(String.format("Ãæ»ý = %.2f", area));
+		System.out.println(String.format("ï¿½ï¿½ï¿½ï¿½ = %.2f", area));
 		scanner.close();
 	}
 }

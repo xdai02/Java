@@ -49,7 +49,7 @@ Java是一种强类型的语言，任何数据都有一个确定的类型。\\
 
 \subsection{数据类型}
 
-Java中变量主要有三大类型：
+Java中变量主要有四大类型：
 
 \begin{enumerate}
 	\item 整型
@@ -133,6 +133,8 @@ public class Contant {
 The final local variable PI cannot be assigned.
 	\end{verbatim}
 \end{tcolorbox}
+
+\newpage
 
 \section{算术运算符}
 
@@ -285,7 +287,7 @@ public class EscapeCharacter {
 \begin{lstlisting}[language=Java]
 import java.util.Scanner;
 
-public class CircleArea {
+public class RectangleArea {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		double length, width;
@@ -387,6 +389,7 @@ public class Reverse {
 类型转换是把变量从一种类型转换为另一种数据类型。类型转换可以是隐式的，由编译器自动执行，也可以是显式的，通过使用强制类型转换运算符来指定。在有需要类型转换时都用上强制类型转换运算符是一种良好的编程习惯。\\
 
 \mybox{隐式类型转换}
+
 \begin{lstlisting}[language=Java]
 public class Implitcit {
 	public static void main(String[] args) {
@@ -400,7 +403,7 @@ public class Implitcit {
 \begin{tcolorbox}
 	\mybox{运行结果}
 	\begin{verbatim}
-b = 2
+b = 1.0
 	\end{verbatim}
 \end{tcolorbox}
 
