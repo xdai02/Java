@@ -92,13 +92,13 @@ boolean matches(String regex)是String类中的非静态方法，使用字符串
 
 	\item $ \backslash $：转义字符。使得某些特殊字符成为普通字符，可以进行规则的指定。使得某些普通字符变得具有特殊含义。由于正则表达式在Java中是需要写在一个字符串中，而字符串中的【$ \backslash $】也是一个转义字符，因此Java中写正则表达式的时候，转义字符需要使用【$ \backslash\backslash $】。
 
-	\item $ \backslash d $：匹配所有的数字，等同于[0-9]。
+	\item $ \backslash $d：匹配所有的数字，等同于[0-9]。
 
-	\item $ \backslash D $：匹配所有的非数字，等同于[\^{}0-9]。
+	\item $ \backslash $D：匹配所有的非数字，等同于[\^{}0-9]。
 
-	\item $ \backslash w $：匹配所有的单词字符，等同于[a-zA-Z0-9\_]。
+	\item $ \backslash $w：匹配所有的单词字符，等同于[a-zA-Z0-9\_]。
 
-	\item $ \backslash W $：匹配所有的非单词字符，等同于[\^{}a-zA-Z0-9\_]。
+	\item $ \backslash $W：匹配所有的非单词字符，等同于[\^{}a-zA-Z0-9\_]。
 
 	\item .：通配符，可以匹配一个任意的字符。
 
@@ -152,6 +152,8 @@ true
 true
 	\end{verbatim}
 \end{tcolorbox}
+
+\vspace{0.5cm}
 
 \mybox{隐藏手机号中间4位}
 
