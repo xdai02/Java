@@ -1,201 +1,335 @@
-\chapter{多态}
+\chapter{异常}
 
-\section{抽象类}
+\section{异常}
 
-\subsection{多态（Polymorphism）}
+\subsection{异常（Exception）}
 
-多态是同一个行为具有多个不同表现形式或形态的能力。例如可以把一只哈士奇，当成它的父类去看待，因此哈士奇是一只狗、一个动物或一个生物。\\
+异常就是程序在运行过程中出现的非正常的情况。异常本身是一个类，产生异常就是创建异常对象并抛出一个异常对象。Java处理异常的方法是中断处理。\\
 
-通过父类引用指向子类对象，例如Animal animal = new Dog()，从而产生多种形态。父类引用仅能访问父类所声明的属性和方法，不能访问子类独有的属性和方法。\\
+如果程序遇到了未经处理的异常，会导致这个程序无法进行编译或者运行。\\
 
-在一对有继承关系的类中都有一个方法，其方法名、参数列表、返回值均相同，通过调用方法实现不同类对象完成不同的事件。\\
+Throwable类用来描述所有的不正常的情况。Throwable有两个子类：
 
-\subsection{抽象类（Abstract Class）}
+\begin{enumerate}
+    \item Error：描述发生在JVM虚拟机级别的错误信息，这些错误无法被处理。
+    \item Exception：描述程序遇到的异常，异常是可以被捕获处理的。
+\end{enumerate}
 
-抽象类不能被用于实例化对象，只是提供了所有的子类共有的部分。例如在动物园中，存在的都是“动物”具体的子类对象，并不存在“动物”对象，所以动物类不应该被独立创建成对象。\\
+\begin{figure}[H]
+    \centering
+    \begin{forest}
+        for tree={% style of tree nodes
+        draw, semithick, rounded corners, drop shadow,
+        top color = red!20,
+        bottom color = red!40,
+        text width = 47mm, text badly centered,
+        edge = {draw, semithick},
+        parent anchor = east,
+        child anchor = west,
+        grow = east,
+        s sep = 5mm,    % sibling distance
+        l sep = 4mm,    % level distance
+        }
+        [Exception
+            [RuntimeException
+                    [UnknownTypeException]
+                    [ArrayIndexOutOfBounds Exception]
+                    [IllegalArgumentException]
+                    [NullPointerException]
+                    [ClassNotFoundException]
+                    [MissingResourceException]
+                    [ArithmeticException]
+            ]
+            %
+            [IOException
+                    [FileNotFoundException]
+                    [EOFException]
+            ]
+        ]
+    \end{forest}
+    \caption{异常分类}
+\end{figure}
 
-抽象类的作用是可以被子类继承，提供共性的属性和方法。\\
+\mybox{数组越界异常}
 
-\subsection{抽象方法（Abstract Method）}
+\begin{lstlisting}[language=Java]
+public class ArrayIndexException {
+    public static void main(String[] args) {
+        int[] arr = {0, 1, 2, 3, 4};
+        System.out.println(arr[5]);
+    }
+}
+\end{lstlisting}
 
-父类提供的方法很难满足子类不同的需求，如果不定义该方法，则表示所有的子类都不具有该行为。如果定义该方法，所有的子类都在重写，那么这个方法在父类中是没有必要实现的，显得多余。\\
+\begin{tcolorbox}
+    \mybox{运行结果}
+    \begin{verbatim}
+Exception in thread "main"
+java.lang.ArrayIndexOutOfBoundsException:
+    Index 5 out of bounds for length 5
+	\end{verbatim}
+\end{tcolorbox}
 
-被abstract关键字修饰的方法称为抽象方法。抽象方法只有声明，没有实现。抽象方法只能包含在抽象类中。产生继承关系后，子类必须重写父类中所有的抽象方法，否则子类还是抽象类。\\
+普通的异常会导致程序无法完成编译，这样的异常被称为非运行时异常（non-runtime exception），但是由于异常是发生在编译时期的，因此常常称为编译时异常。\\
 
-非抽象类在继承自一个抽象父类的同时，必须重写实现父类中所有的抽象方法。因此，抽象类可以用来做一些简单的规则制定。在抽象类中制定一些规则，要求所有的子类必须实现，约束所有子类的行为。\\
-
-但是，类是单继承的，一个类有且只能有一个父类，所以如果一个类需要受到多种规则的约束，无法再继承其它父类。此时可以使用接口进行这样的复杂的规则制定。
+Exception类有一个子类RuntimeException类对异常进了自动的处理，这种异常不会影响程序的编译，但是在运行中如果遇到了这种异常，会导致程序执行的强制停止。这样的异常被称为运行时异常。
 
 \newpage
 
-\section{对象转型}
+\section{异常的捕获处理}
 
-\subsection{对象转型}
+\subsection{try-catch}
 
-对象由子类类型转型为父类类型，即是向上转型。向上转型是一种隐式转换，一定会转型成功。向上转型后的对象，只能访问父类中定义的成员。\\
+如果一个异常不去处理，会导致程序无法编译或者运行。使用try-catch语句可以捕获并处理异常。
 
-由父类类型转型转型为子类类型，即是向下转型。向下转型存在失败的可能性，会出现ClassCastException异常。向下转型需要进行强制类型转换，是一个显式转换。向下转型后的对象，将可以访问子类中独有的成员。\\
+\vspace{-0.5cm}
 
-向下转型存在失败的可能性。如果引用实际指向的对象，不是要转型的类型，此时强制转换会出现ClassCastException异常。所以，在向下转型之前，最好使用instanceof关键字进行类型检查。\\
-
-\mybox{对象转型}
-
-\begin{lstlisting}[language=Java, title=Animal.java]
-public abstract class Animal {
-    private String name;
-
-    public Animal(String name) {
-        this.name = name;
-    }
-
-    public abstract void makeSound();
+\begin{lstlisting}[language=Java]
+try {
+    // 可能出现异常的代码
+} catch(exceptionType e) {
+    // 异常的类型和catch的异常的类型匹配，执行此处逻辑
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=Java, title=Dog.java]
-public class Dog extends Animal {
-    public Dog(String name) {
-        super(name);
-    }
-    
-    @Override
-    public void makeSound() {
-        System.out.println("汪汪~");
-    }
-}
-\end{lstlisting}
+一个异常如果被捕获处理了，那么将不再影响程序的执行。
 
-\begin{lstlisting}[language=Java, title=TestDog.java]
-public class TestDog {
+\begin{figure}[H]
+    \centering
+    \includegraphics{img/Chapter10/10-2/1.png}
+\end{figure}
+
+如果在try结构中出现了异常，那么从异常出现的位置开始，try结构中往后的代码将不再执行。\\
+
+\mybox{捕获数组越界异常}
+
+\begin{lstlisting}[language=Java]
+public class TryCatch {
     public static void main(String[] args) {
-        Animal animal = new Dog("狗子");
-        if(animal instanceof Dog) {
-            Dog dog = (Dog)animal;
-            dog.makeSound();
+        int[] arr = {0, 1, 2, 3, 4};
+        try {
+            int elem = arr[5];
+            System.out.println("elem = " + elem);
+        } catch(ArrayIndexOutOfBoundsException e) {
+            System.out.println("数组下标越界异常被捕获处理了");
         }
     }
 }
 \end{lstlisting}
 
 \begin{tcolorbox}
-	\mybox{运行结果}
-	\begin{verbatim}
-汪汪~
+    \mybox{运行结果}
+    \begin{verbatim}
+数组下标越界异常被捕获处理了
 	\end{verbatim}
 \end{tcolorbox}
 
-\newpage
+\vspace{0.5cm}
 
-\section{接口}
+\subsection{finally}
 
-\subsection{接口}
+finally出现在try-catch结构的结尾，无论try代码段中有没有异常、无论try里面出现的异常有没有被捕获处理，finally中的代码始终会执行。基于这个特点，常常在finally中进行资源释放、流的关闭等操作。\\
 
-在面向对象中会使用抽象类为外部提供一个通用的、标准化的接口。\\
+\mybox{finally}
 
-宏观上来讲，接口是一种标准。例如常见的USB接口，电脑通过USB接口连接各种外设设备，每一个接口不用关心连接的外设设备是什么，只要这个外设设备实现了USB的标准，就可以连接到电脑上。\\
+\begin{lstlisting}[language=Java]
+import java.util.Scanner;
 
-从程序上来讲，接口代表了某种能力和约定。当父类的方法无法满足子类需求时，可实现接口扩充子类的能力，接口中方法的定义代表能力的具体要求。\\
-
-定义接口需要使用关键字interface，接口中可以定义：
-
-\begin{enumerate}
-	\item 属性：默认都是静态常量，访问权限都是public。
-	\item 方法：默认都是抽象方法，访问权限都是public。
-\end{enumerate}
-
-接口和抽象类的相同点有：
-
-\begin{enumerate}
-	\item 都不能创建对象。
-	\item 都具备Object类中所定义的方法。
-	\item 都可以写抽象方法。
-\end{enumerate}
-
-接口和抽象类的不同点有：
-
-\begin{enumerate}
-	\item 接口中所有的属性都是公开静态常量，缺省用public static final修饰。
-	\item 接口中所有的方法都是公开抽象方法，缺省用public abstract修饰。
-	\item 接口中没有构造方法、构造代码段和静态代码段。
-\end{enumerate}
-
-因为接口中有很多抽象方法，因此非抽象类在实现接口的时候必须重写实现接口中所有的抽象方法。\\
-
-使用接口可以进行对行为的约束和规则的制定，接口表示一组能力，那么一个类可以接受多种能力的约束。因此一个类可以实现多个接口，实现多个接口的时候，必须要把每一个接口中的方法都实现。如果一个类实现的多个接口中有相同的方法，实现类只需实现一次即可。\\
-
-\mybox{接口}
-
-\begin{lstlisting}[language=Java, title=USB.java]
-public interface USB {
-    /**
-     * USB接口返回当前连接设备的类型
-     * @return 当前连接设备
-     */
-    String getDeviceInfo();
-}
-\end{lstlisting}
-
-\begin{lstlisting}[language=Java, title=Mouse.java]
-public class Mouse implements USB {
-    @Override
-    public String getDeviceInfo() {
-        return "mouse";
-    }
-}
-\end{lstlisting}
-
-\begin{lstlisting}[language=Java, title=Keyboard.java]
-public class Keyboard implements USB {
-    @Override
-    public String getDeviceInfo() {
-        return "keyboard";
-    }
-}
-\end{lstlisting}
-
-\begin{lstlisting}[language=Java, title=Computer.java]
-public class Computer {
-    // 电脑有2个USB接口
-    private USB usb1;
-    private USB usb2;
-    
-    public void setUsb1(USB usb1) {
-        this.usb1 = usb1;
-    }
-    
-    public void setUsb2(USB usb2) {
-        this.usb2 = usb2;
-    }
-    
-    /**
-     * 获取USB接口连接设备的信息
-     */
-    public String getUsbInfo() {
-        return "USB 1: " + this.usb1.getDeviceInfo() + "\n"
-                + "USB 2: " + this.usb2.getDeviceInfo();
-    }
-}
-\end{lstlisting}
-
-\begin{lstlisting}[language=Java, title=TestUsb.java]
-public class TestUsb {
+public class Finally {
     public static void main(String[] args) {
-        Computer computer = new Computer();
-        
-        // 外设设备连接到电脑上
-        computer.setUsb1(new Mouse());
-        computer.setUsb2(new Keyboard());
-        
-        System.out.println(computer.getUsbInfo());
+        Scanner scanner = new Scanner(System.in);
+        int[] arr = {0, 1, 2, 3, 4};
+        try {
+            System.out.print("输入新数据：");
+            arr[5] = scanner.nextInt();
+        } catch(ArrayIndexOutOfBoundsException e) {
+            System.out.println("数组下标越界异常被捕获处理了");
+        } finally {
+            System.out.println("关闭输入流...");
+            scanner.close();
+        }
     }
 }
 \end{lstlisting}
 
 \begin{tcolorbox}
-	\mybox{运行结果}
-	\begin{verbatim}
-USB 1: mouse
-USB 2: keyboard
+    \mybox{运行结果}
+    \begin{verbatim}
+输入新数据：5
+数组下标越界异常被捕获处理了
+关闭输入流...
+	\end{verbatim}
+\end{tcolorbox}
+
+\vspace{0.5cm}
+
+\subsection{catch}
+
+如果多个catch捕获的异常类型之间没有继承关系存在，此时先后顺序无所谓。\\
+
+如果多个catch捕获的异常类型之间存在继承关系，则必须保证父类异常在后，子类异常在前。\\
+
+\mybox{catch}
+
+\begin{lstlisting}[language=Java]
+import java.util.Scanner;
+import java.util.InputMismatchException;
+
+public class Catch {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        try {
+            System.out.println("【除法运算】");
+            System.out.print("输入被除数：");
+            int num1 = scanner.nextInt();
+            System.out.print("输入除数：");
+            int num2 = scanner.nextInt();
+            int result = num1 / num2;
+            System.out.println("结果：" + result);
+        } catch(ArithmeticException e) {
+            System.err.println("算术异常");
+        } catch(InputMismatchException e) {
+            System.err.println("输入类型异常");
+        } finally {
+            scanner.close();
+        }
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+    \mybox{运行结果}
+    \begin{verbatim}
+【除法运算】
+输入被除数：10
+输入除数：0
+算术异常
+	\end{verbatim}
+
+    \mybox{运行结果}
+    \begin{verbatim}
+【除法运算】
+输入被除数：hey
+输入类型异常
+	\end{verbatim}
+\end{tcolorbox}
+
+\newpage
+
+\section{throw与throws}
+
+\subsection{throw / throws}
+
+throw关键字用于抛出一个异常，一般用于程序出现某种逻辑时程序员主动抛出某种特定类型的异常。
+
+\vspace{-0.5cm}
+
+\begin{lstlisting}[language=Java]
+throw e;
+\end{lstlisting}
+
+throws关键字用在声明方法的时候，表示该方法可能要抛出异常。定义了throws异常抛出类型的方法，在当前的方法中可以不处理这个异常，由调用方处理。
+
+\vspace{-0.5cm}
+
+\begin{lstlisting}[language=Java]
+accessModifier returnType func([paramList]) throws exceptionType {
+    // code
+}
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics{img/Chapter10/10-3/1.png}
+\end{figure}
+
+\mybox{抛出异常}
+
+\begin{lstlisting}[language=Java]
+public class Person {
+    private int age;
+    
+    public void setAge(int age) throws Exception {
+        if(age < 0 || age > 130) {
+            throw new Exception();
+        }
+        this.age = age; 
+    }
+    
+    public static void main(String[] args) {
+        try {
+            Person person = new Person();
+            person.setAge(-1);
+        } catch(Exception e) {
+            System.out.println("年龄异常");
+        }
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+    \mybox{运行结果}
+    \begin{verbatim}
+年龄异常
+	\end{verbatim}
+\end{tcolorbox}
+
+\newpage
+
+\section{自定义异常}
+
+\subsection{自定义异常}
+
+使用异常是为了处理一些重大的逻辑bug，这些逻辑bug可能会导致程序的崩溃。此时，可以使用异常机制，强迫修改这个bug。\\
+
+系统中提供了很多的异常类型，但是异常类型提供地再多，也无法满足所有的需求。当需要的异常类型系统没有提供的时候，此时就需要自定义异常了。\\
+
+系统提供的每一种异常都是一个类，所以自定义异常其实就是写一个自定义的异常类。自定义的异常类，理论上来讲，类名可以任意定义，但是出于规范，一般都会以Exception作为结尾，例如ArrayIndexOutOfBoundsException、NullPointerException、ArithmeticException等。\\
+
+如果要自定义一个编译时异常，需要继承自Exception类，如果要自定义一个运行时异常，需要继承自RuntimeException类。\\
+
+\mybox{自定义异常}
+
+\begin{lstlisting}[language=Java, title=AgeException.java]
+public class AgeException extends RuntimeException {
+    public AgeException() {
+        super("年龄异常");
+    }
+    
+    public AgeException(int age) {
+        super("年龄异常：" + age);
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, title=Person.java]
+public class Person {
+    private int age;
+    
+    public void setAge(int age) throws AgeException {
+        if(age < 0 || age > 130) {
+            throw new AgeException(age);
+        }
+        this.age = age;
+    }
+    
+    public static void main(String[] args) {
+        try {
+            Person person = new Person();
+            person.setAge(-1);
+        } catch(AgeException e) {
+            e.printStackTrace();
+        }
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+    \mybox{运行结果}
+    \begin{verbatim}
+AgeException: 年龄异常：-1
+at Person.setAge(Person.java:6)
+at Person.main(Person.java:15)
 	\end{verbatim}
 \end{tcolorbox}
 

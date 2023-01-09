@@ -1,53 +1,116 @@
-\chapter{封装}
+\chapter{继承}
 
-\section{面向过程与面向对象}
+\section{继承}
 
-\subsection{面向过程（Procedure Oriented）}
+\subsection{继承（Inheritance）}
 
-面向过程是一种以过程为中心的编程思想，以什么正在发生为主要目标进行编程，分析出解决问题所需要的步骤，然后用函数把这些步骤一步一步实现，使用的时候一个一个依次调用。\\
+继承是面向对象的三大特征之一，程序中的继承是类与类之间的特征和行为的一种赠予或获取。两个类之间的继承必须满足“is a”的关系。子类继承自父类，父类也称基类或超类，子类也称派生类。
 
-C语言就是一种面向过程的编程语言，但是面向过程的缺陷是数据和函数并不完全独立，使用两个不同的实体表示信息及其操作。\\
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\begin{class}{Animal}{0,0}
+			\attribute{- age}
+			\attribute{- gender}
+			\operation{+ eat() : void}
+			\operation{+ sleep() : void}
+		\end{class}
 
-\subsection{面向对象（Object Oriented）}
+		\begin{class}{Dog}{-5,-5}
+			\inherit{Animal}
+			\attribute{- type}
+			\operation{+ bite() : void}
+		\end{class}
 
-面向对象是相对于面向过程来讲的，面向对象方法把相关的数据和方法组织为一个整体来看待，从更高的层次来进行系统建模，更贴近事物的自然运行模式。\\
+		\begin{class}{Cat}{5,-5}
+			\inherit{Animal}
+			\attribute{- hairColor}
+			\operation{+ mewing() : void}
+		\end{class}
+	\end{tikzpicture}
+	\caption{继承}
+\end{figure}
 
-在面向对象中，把构成问题的事物分解成各个对象，建立对象的目的不是为了完成一个步骤，而是为了描叙某个事物在整个解决问题的步骤中的行为。\\
+产生继承关系后，子类可以使用父类中的属性和方法，也可以定义子类独有的属性和方法。
 
-Java、C++、Python等都是面向对象的编程语言，面向对象的优势在于只是用一个实体就能同时表示信息及其操作。\\
+\vspace{-0.5cm}
 
-面向对象三大特性：
+\begin{lstlisting}[language=Java]
+class subclass extends superclass {
+    // code
+}
+\end{lstlisting}
+
+继承时通常使用public类型。当一个类public继承于父类时，父类的public成员也是子类的public成员，父类的protected成员也是子类的protected成员，父类的private成员不能被继承。\\
+
+继承的好处是可以提高代码的复用性、提高代码的拓展性。\\
+
+父类中以下内容是不可以被继承的：
 
 \begin{enumerate}
-	\item 封装（encapsulation）：数据和代码捆绑，避免外界干扰和不确定性访问。
-	\item 继承（inheritance）：让某种类型对象获得另一类型对象的属性和方法。
-	\item 多态（polymorphism）：同一事物表现出不同事物的能力。
+	\item 构造方法：构造方法是为了创建当前类的对象的。
+	\item 私有成员：私有成员只能在当前的类中使用。
+	\item 跨包子类：默认权限的属性、方法，不可以继承给跨包的子类。
 \end{enumerate}
 
-\newpage
+\vspace{0.5cm}
 
-\section{类与对象}
+\subsection{访问权限修饰符}
 
-\subsection{类与对象}
+访问权限修饰符，就是修饰类、属性的访问权限。
 
-类（class）表示同一类具有相同特征和行为的对象的集合，类定义了对象的属性和方法。\\
+\begin{table}[H]
+	\centering
+	\setlength{\tabcolsep}{5mm}{
+		\begin{tabular}{|c|c|c|c|c|}
+			\hline
+			\textbf{访问权限修饰符}  & \textbf{当前类} & \textbf{同包其它类} & \textbf{跨包子类} & \textbf{跨包其它类} \\
+			\hline
+			\textbf{private}         & \checkmark      & \XSolidBrush        & \XSolidBrush      & \XSolidBrush        \\
+			\hline
+			\textbf{default（不写）} & \checkmark      & \checkmark          & \XSolidBrush      & \XSolidBrush        \\
+			\hline
+			\textbf{protected}       & \checkmark      & \checkmark          & \checkmark        & \XSolidBrush        \\
+			\hline
+			\textbf{public}          & \checkmark      & \checkmark          & \checkmark        & \checkmark          \\
+			\hline
+		\end{tabular}
+	}
+	\caption{访问权限修饰符}
+\end{table}
 
-对象（object）是类的实例，对象拥有属性和方法。\\
+\vspace{0.5cm}
 
-类的设计需要使用关键字class，类名是一个标识符，遵循大驼峰命名法。类中可以包含属性和方法。其中，属性通过变量表示，又称实例变量；方法用于描述行为，又称实例方法。\\
+\subsection{super}
 
-通过关键字new进行对象的实例化，实例化对象会调用类中的构造函数完成。类是一种引用数据类型，对象的实例化在堆上开辟空间。\\
+使用super可以调用父类的方法。子类对象在实例化的时候，需要先实例化从父类继承到的部分，此时默认调用父类中的无参构造方法。\\
 
-\mybox{类和对象}
+如果父类中没有无参构造方法，对所有的子类对象实例化都会造成影响，导致子类对象无法实例化。\\
 
-\begin{lstlisting}[language=Java, title=Person.java]
-public class Person {
-    // 属性：描述所有对象共有的特征
-    public String name;
-    public int age;
-    public String gender;
+解决方法有两种：
 
-    // 方法：描述所有对象共有的功能
+\begin{enumerate}
+	\item 为父类添加无参构造方法。
+	\item 在子类的构造方法中，使用super()调用父类中的有参构造函数。
+\end{enumerate}
+
+\mybox{继承}
+
+\begin{lstlisting}[language=Java, title=Animal.java]
+public class Animal {
+    private String name;
+    private int age;
+
+    public Animal() {
+        this.name = "";
+        this.age = 0;
+    }
+
+    public Animal(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    
     public void eat() {
         System.out.println("吃饭");
     }
@@ -58,28 +121,28 @@ public class Person {
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=Java, title=TestPerson.java]
-public class TestPerson {
+\begin{lstlisting}[language=Java, title=Dog.java]
+public class Dog extends Animal {
+    private String type;
+
+    public Dog(String name, int age, String type) {
+        super(name, age);
+        this.type = type;
+    }
+    
+    public void bite() {
+        System.out.println("咬人");
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, title=TestDog.java]
+public class TestDog {
     public static void main(String[] args) {
-        Person zhangsan = new Person();
-        zhangsan.name = "张三";
-        zhangsan.age = 18;
-        zhangsan.gender = "男";
-
-        Person lisi = new Person();
-        lisi.name = "李四";
-        lisi.age = 22;
-        lisi.gender = "女";
-
-        System.out.println("姓名：" + zhangsan.name 
-                            + " 年龄：" + zhangsan.age
-                            + " 性别：" + zhangsan.gender);
-        System.out.println("姓名：" + lisi.name 
-                            + " 年龄：" + lisi.age
-                            + " 性别：" + lisi.gender);
-        
-        zhangsan.eat();
-        lisi.sleep();
+        Dog dog = new Dog("狗子", 3, "哈士奇");
+        dog.eat();
+        dog.sleep();
+        dog.bite();
     }
 }
 \end{lstlisting}
@@ -87,85 +150,39 @@ public class TestPerson {
 \begin{tcolorbox}
 	\mybox{运行结果}
 	\begin{verbatim}
-姓名：张三 年龄：18 性别：男
-姓名：李四 年龄：22 性别：女
 吃饭
 睡觉
+咬人
 	\end{verbatim}
 \end{tcolorbox}
 
 \newpage
 
-\section{封装}
+\section{重写}
 
-\subsection{封装（Encapsulation）}
+\subsection{toString()}
 
-封装是面向对象方法的重要原则，就是把对象的属性和方法结合为一个独立的整体，并尽可能隐藏对象的内部实现细节。\\
+Object类是Java中类层次的根类，所有的类都直接或者间接地继承自Object类。Object类的toString()方法返回一个字符串，该字符串由类名、标记符【@】和此对象的哈希码的无符号十六进制表示组成。\\
 
-封装可以认为是一个保护屏障，防止该类的数据被外部类随意访问。要访问该类的数据，必须通过严格的接口控制。合适的封装可以让代码更容易理解和维护，也加强了程序的安全性。\\
+\mybox{toString()}
 
-实现封装的步骤：
-
-\begin{enumerate}
-	\item 修改属性的可见性来限制对属性的访问，一般限制为private。
-	\item 对每个属性提供对外的公共方法访问，也就是提供一对setter / getter，用于对私有属性的访问。
-\end{enumerate}
-
-\vspace{0.5cm}
-
-\subsection{访问权限}
-
-属性和方法的访问权限一般分为3种：
-
-\begin{enumerate}
-	\item public：属性和方法在类的内部和外部都可以访问。
-	\item private：属性和方法只能在类内访问。
-	\item protected：属性和方法只能在类的内部和其派生类中访问。
-\end{enumerate}
-
-\vspace{0.5cm}
-
-\subsection{this指针}
-
-每一个对象都能通过this指针来访问自身的地址，this指针是所有成员方法的隐含参数，在成员方法内部可以用来指向调用对象。\\
-
-在类中，属性的名字可以和局部变量的名字相同。此时，如果直接使用名字来访问，优先访问的是局部变量。因此，需要使用this指针来访问当前对象的属性。\\
-
-当需要访问的属性与局部变量没有重名的时候，this可以省略。\\
-
-\mybox{封装}
-
-\begin{lstlisting}[language=Java, title=Person.java]
-public class Person {
+\begin{lstlisting}[language=Java, title=Dog.java]
+public class Dog extends Animal {
     private String name;
-    private int age;
-
-    public void setName(String name) {
+    private String type;
+    
+    public Dog(String name, String type) {
         this.name = name;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getAge() {
-        return age;
-    }
+        this.type = type;
+    }   
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=Java, title=TestPerson.java]
-public class TestPerson {
+\begin{lstlisting}[language=Java, title=TestDog.java]
+public class TestDog {
     public static void main(String[] args) {
-        Person person = new Person();
-        person.setName("小灰");
-        person.setAge(17);
-        System.out.println("姓名：" + person.getName());
-        System.out.println("年龄：" + person.getAge());
+        Dog dog = new Dog("狗子", "哈士奇");
+        System.out.println(dog);
     }
 }
 \end{lstlisting}
@@ -173,75 +190,125 @@ public class TestPerson {
 \begin{tcolorbox}
 	\mybox{运行结果}
 	\begin{verbatim}
-姓名：小灰
-年龄：17
+Dog@28a418fc
 	\end{verbatim}
 \end{tcolorbox}
 
-\newpage
+\vspace{0.5cm}
 
-\section{构造方法}
+\subsection{重写（Override）}
 
-\subsection{构造方法（Constructor）}
+子类可以继承到父类中的属性和方法，但是有些方法，子类的实现与父类的方法可能实现的不同。当父类提供的方法已经不能满足子类的需求时，子类中可以定义与父类相同的方法。此时，子类方法完成对父类方法的覆盖，称为重写。\\
 
-构造方法也是一个方法，用于实例化对象，在实例化对象的时候调用。一般情况下，使用构造方法是为了在实例化对象的同时，给一些属性进行初始化赋值。\\
-
-构造方法和普通方法的区别：
+重写方法需要注意以下几点：
 
 \begin{enumerate}
-	\item 构造方法的名字必须和类名一致。
-	\item 构造方法没有返回值，返回值类型部分不写。
+	\item 方法名字必须和父类方法名字相同。
+	\item 参数列表必须和父类一致。
+	\item 方法的访问权限需要大于等于父类方法的访问权限。
+	\item 方法的返回值类型需要小于等于父类方法的返回值类型。
 \end{enumerate}
 
-如果一个类中没有写构造方法，系统会自动提供一个public权限的无参构造方法，以便实例化对象。如果一个类中已经写了构造方法，此时系统将不再提供任何默认的构造方法。\\
+@Override是一个注解，用于进行重写前的校验，校验一个方法是否是一个重写的方法，如果不是重写的方法，会直接报错。\\
 
-\mybox{构造方法}
+@Override只是对方法进行重写的验证，与这个方法是不是重写方法无关。在写重写方法的时候，这个注解最好加上。\\
 
-\begin{lstlisting}[language=Java, title=Person.java]
-public class Person {
+\mybox{重写toString()}
+
+\begin{lstlisting}[language=Java, title=Dog.java]
+public class Dog {
+    private String name;
+    private String type;
+    
+    public Dog(String name, String type) {
+        this.name = name;
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "我叫" + this.name + "，我是一只" + this.type;
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, title=TestDog.java]
+public class TestDog {
+    public static void main(String[] args) {
+        Dog dog = new Dog("狗子", "哈士奇");
+        System.out.println(dog);
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果}
+	\begin{verbatim}
+我叫狗子，我是一只哈士奇
+	\end{verbatim}
+\end{tcolorbox}
+
+\vspace{0.5cm}
+
+\subsection{equals()}
+
+【==】运算符默认比较的是两个对象的地址，如果地址相同则为true，否则为false。\\
+
+equals()方法默认返回地址比较，通过重写equals()方法，可以自定义两个对象的等值比较规则。\\
+
+\mybox{重写equals()}
+
+\begin{lstlisting}[language=Java, title=Dog.java]
+public class Dog {
     private String name;
     private int age;
+    private String type;
+
+    public Dog(String name, int age, String type) {
+        this.name = name;
+        this.age = age;
+        this.type = type;
+    }
     
     /**
-     * 无参构造方法
+     * 自定义规则：实现两个对象的等值比较
+     * @param obj - 需要比较的对象
+     * @return 比较的结果：相同true，不同false 
      */
-    public Person() {
-        this.name = "";
-        this.age = 0;
-    }
-
-    /**
-     * 有参构造方法
-     */
-    public Person(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getAge() {
-        return age;
+    @Override
+    public boolean equals(Object obj) {
+        // 1. 如果两个对象地址相同，返回true
+        if(this == obj) {
+            return true;
+        }
+        
+        // 2. 如果obj是null，返回false
+        if(obj == null) {
+            return false;
+        }
+        
+        // 3. 如果两个对象类型不同，返回false
+        if(this.getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        // 4. 如果两个对象中的属性全部相同，返回true，否则返回false
+        Dog dog = (Dog)obj;
+        return this.name.equals(dog.name) 
+                && this.age == dog.age 
+                && this.type.equals(dog.type);
     }
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=Java, title=TestPerson.java]
-public class TestPerson {
+\begin{lstlisting}[language=Java, title=TestDog.java]
+public class TestDog {
     public static void main(String[] args) {
-        Person person = new Person("小灰", 17);
-        System.out.println("姓名：" + person.getName());
-        System.out.println("年龄：" + person.getAge());
+        Dog dog1 = new Dog("狗子", 3, "哈士奇");
+        Dog dog2 = new Dog("狗子", 3, "哈士奇");
+        
+        System.out.println(dog1 == dog2);
+        System.out.println(dog1.equals(dog2));
     }
 }
 \end{lstlisting}
@@ -249,8 +316,8 @@ public class TestPerson {
 \begin{tcolorbox}
 	\mybox{运行结果}
 	\begin{verbatim}
-姓名：小灰
-年龄：17
+false
+true
 	\end{verbatim}
 \end{tcolorbox}
 

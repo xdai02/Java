@@ -1,589 +1,256 @@
-\chapter{函数}
+\chapter{封装}
 
-\section{函数}
+\section{面向过程与面向对象}
 
-\subsection{函数（Function）}
+\subsection{面向过程（Procedure Oriented）}
 
-函数执行一个特定的任务，Java提供了大量内置函数，例如println用来输出字符串、substring()用来截取子字符串等。
+面向过程是一种以过程为中心的编程思想，以什么正在发生为主要目标进行编程，分析出解决问题所需要的步骤，然后用函数把这些步骤一步一步实现，使用的时候一个一个依次调用。\\
 
-\begin{figure}[H]
-	\centering
-	\begin{tikzpicture}[scale=0.5]
-		\draw[-] (5,-2) -- (10,-2) -- (10,2) -- (5,2) -- (5,-2);
-		\draw[->] (0,0) -- (5,0);
-		\draw[->] (10,0) -- (15,0);
+C语言就是一种面向过程的编程语言，但是面向过程的缺陷是数据和函数并不完全独立，使用两个不同的实体表示信息及其操作。\\
 
-		\draw (-2,0) node {Input};
-		\draw (17,0) node {Output};
-		\draw (7.5,0) node {Function};
-	\end{tikzpicture}
-	\caption{函数}
-\end{figure}
+\subsection{面向对象（Object Oriented）}
 
-当调用函数时，程序控制权会转移给被调用的函数，当函数执行结束后，函数会把程序序控制权交还给其调用者。
+面向对象是相对于面向过程来讲的，面向对象方法把相关的数据和方法组织为一个整体来看待，从更高的层次来进行系统建模，更贴近事物的自然运行模式。\\
 
-\begin{figure}[H]
-	\centering
-	\begin{tikzpicture}[]
-		\draw (0,4.5) node {Caller};
-		\draw[->] (0,4) -- (0,0.5);
-		\draw[->] (0,-0.5) -- (0,-4);
-		\draw (0,0) node {调用foo()};
+在面向对象中，把构成问题的事物分解成各个对象，建立对象的目的不是为了完成一个步骤，而是为了描叙某个事物在整个解决问题的步骤中的行为。\\
 
-		\draw (4,4) node {foo()};
-		\draw[->] (4,3) -- (4,0.5);
-		\draw[->] (4,-0.5) -- (4,-3);
-		\draw (4,0) node {调用bar()};
+Java、C++、Python等都是面向对象的编程语言，面向对象的优势在于只是用一个实体就能同时表示信息及其操作。\\
 
-		\draw (8,3) node {bar()};
-		\draw[->] (8,2) -- (8,-2);
-
-		\draw[->] (0.5,0.5) -- (3.5,3);
-		\draw[->] (3.5,-3) -- (0.5,-0.5);
-		\draw[->] (4.5,0.5) -- (7.5,2);
-		\draw[->] (7.5,-2) -- (4.5,-0.5);
-	\end{tikzpicture}
-	\caption{函数调用}
-\end{figure}
-
-函数定义时需要指定函数的名称、返回类型和参数。函数的参数列表包括参数的类型、顺序、数量等信息，参数列表可以为空。\\
-
-函数可以返回一个值，函数的返回类型为被返回的值的类型。函数也可以不返回任何值，此时函数的返回类型应定义为void。
-
-\vspace{-0.5cm}
-
-\begin{lstlisting}[language=Java]
-AccessModifier dataType funcName(parameterList) {
-	//code
-}
-\end{lstlisting}
-
-\vspace{0.5cm}
-
-\subsection{函数设计方法}
-
-为什么不把所有的代码全部写在一起，还需要自定义函数呢？\\
-
-使用函数有以下好处：
+面向对象三大特性：
 
 \begin{enumerate}
-	\item 避免代码复制，代码复制是程序质量不良的表现
-	\item 便于代码维护
-	\item 避免重复造轮子，提高开发效率
+	\item 封装（encapsulation）：数据和代码捆绑，避免外界干扰和不确定性访问。
+	\item 继承（inheritance）：让某种类型对象获得另一类型对象的属性和方法。
+	\item 多态（polymorphism）：同一事物表现出不同事物的能力。
 \end{enumerate}
 
-在设计函数的时候需要考虑以下的几点要素：
+\newpage
 
-\begin{enumerate}
-	\item 确定函数的功能
+\section{类与对象}
 
-	\item 确定函数的参数
-	      \begin{itemize}
-		      \item 是否需要参数
-		      \item 参数个数
-		      \item 参数类型
-	      \end{itemize}
+\subsection{类与对象}
 
-	\item 确定函数的返回值
-	      \begin{itemize}
-		      \item 是否需要返回值
-		      \item 返回值类型
-	      \end{itemize}
-\end{enumerate}
+类（class）表示同一类具有相同特征和行为的对象的集合，类定义了对象的属性和方法。\\
 
-\mybox{函数实现返回最大值}
+对象（object）是类的实例，对象拥有属性和方法。\\
 
-\begin{lstlisting}[language=Java]
-public class Max {
-	public static void main(String[] args) {
-		System.out.println(max(4, 12));
-		System.out.println(max(54, 33));
-		System.out.println(max(0, -12));
-		System.out.println(max(-999, -774));
-	}
+类的设计需要使用关键字class，类名是一个标识符，遵循大驼峰命名法。类中可以包含属性和方法。其中，属性通过变量表示，又称实例变量；方法用于描述行为，又称实例方法。\\
 
-	public static int max(int num1, int num2) {
-		// if(num1 > num2) {
-		//	 return num1;
-		// } else {
-		//	 return num2;
-		// }
-		return num1 > num2 ? num1 : num2;
-	}
+通过关键字new进行对象的实例化，实例化对象会调用类中的构造函数完成。类是一种引用数据类型，对象的实例化在堆上开辟空间。\\
+
+\mybox{类和对象}
+
+\begin{lstlisting}[language=Java, title=Person.java]
+public class Person {
+    // 属性：描述所有对象共有的特征
+    public String name;
+    public int age;
+    public String gender;
+
+    // 方法：描述所有对象共有的功能
+    public void eat() {
+        System.out.println("吃饭");
+    }
+
+    public void sleep() {
+        System.out.println("睡觉");
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, title=TestPerson.java]
+public class TestPerson {
+    public static void main(String[] args) {
+        Person zhangsan = new Person();
+        zhangsan.name = "张三";
+        zhangsan.age = 18;
+        zhangsan.gender = "男";
+
+        Person lisi = new Person();
+        lisi.name = "李四";
+        lisi.age = 22;
+        lisi.gender = "女";
+
+        System.out.println("姓名：" + zhangsan.name 
+                            + " 年龄：" + zhangsan.age
+                            + " 性别：" + zhangsan.gender);
+        System.out.println("姓名：" + lisi.name 
+                            + " 年龄：" + lisi.age
+                            + " 性别：" + lisi.gender);
+        
+        zhangsan.eat();
+        lisi.sleep();
+    }
 }
 \end{lstlisting}
 
 \begin{tcolorbox}
 	\mybox{运行结果}
 	\begin{verbatim}
-12
-54
-0
--774
-	\end{verbatim}
-\end{tcolorbox}
-
-\vspace{0.5cm}
-
-\mybox{函数实现累加和}
-
-\begin{lstlisting}[language=Java]
-public class Sum {
-	public static void main(String[] args) {
-		System.out.println("1-100的累加和 = " + sum(1, 100));
-		System.out.println("1024-2048的累加和 = "+ sum(1024, 2048));
-	}
-
-	public static int sum(int start, int end) {
-		int total = 0;
-		for(int i = start; i <= end; i++) {
-			total += i;
-		}
-		return total;
-	}
-}
-\end{lstlisting}
-
-\begin{tcolorbox}
-	\mybox{运行结果}
-	\begin{verbatim}
-1-100的累加和 = 5050
-1024-2048的累加和 = 1574400
-	\end{verbatim}
-\end{tcolorbox}
-
-\vspace{0.5cm}
-
-\mybox{函数实现输出i行j列由自定义字符组成的图案}
-
-\begin{lstlisting}[language=Java]
-public class PrintChars {
-	public static void main(String[] args) {
-		printChars(5, 10, '?');
-	}
-
-	public static void printChars(int row, int col, char c) {
-		for(int i = 0; i < row; i++) {
-			for(int j = 0; j < col; j++) {
-				System.out.print(c);
-			}
-			System.out.println();
-		}
-	}
-}
-\end{lstlisting}
-
-\begin{tcolorbox}
-	\mybox{运行结果}
-	\begin{verbatim}
-??????????
-??????????
-??????????
-??????????
-??????????
+姓名：张三 年龄：18 性别：男
+姓名：李四 年龄：22 性别：女
+吃饭
+睡觉
 	\end{verbatim}
 \end{tcolorbox}
 
 \newpage
 
-\section{递归} \label{recursive}
+\section{封装}
 
-\subsection{递归（Recursion）}
+\subsection{封装（Encapsulation）}
 
-要理解递归，先得理解递归（见\ref{recursive}章节）。\\
+封装是面向对象方法的重要原则，就是把对象的属性和方法结合为一个独立的整体，并尽可能隐藏对象的内部实现细节。\\
 
-在函数的内部，直接或者间接的调用自己的过程就叫作递归。对于一些问题，使用递归可以简洁易懂的解决问题，但是递归的缺点是性能低，占用大量系统栈空间。\\
+封装可以认为是一个保护屏障，防止该类的数据被外部类随意访问。要访问该类的数据，必须通过严格的接口控制。合适的封装可以让代码更容易理解和维护，也加强了程序的安全性。\\
 
-递归算法很多时候可以处理一些特别复杂、难以直接解决的问题。例如：
+实现封装的步骤：
 
-\begin{itemize}
-	\item 迷宫
-	\item 汉诺塔
-	\item 八皇后
-	\item 排序
-	\item 搜索
-\end{itemize}
-
-在定义递归函数时，一定要确定一个结束条件，否则会造成无限递归的情况，最终会导致栈溢出。
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.7]{img/C6/6-2/1.png}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.6]{img/C6/6-2/2.png}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.6]{img/C6/6-2/3.png}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=1.3]{img/C6/6-2/4.png}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.6]{img/C6/6-2/5.png}
-\end{figure}
-
-\mybox{无限递归}
-
-\begin{lstlisting}[language=Java]
-public class TellStory {
-	public static void main(String[] args) {
-		tellStory();
-	}
-	
-	public static void tellStory() {
-		System.out.println("从前有座山");
-		System.out.println("山里有座庙");
-		System.out.println("庙里有个老和尚和小和尚");
-		System.out.println("老和尚在对小和尚讲故");
-		System.out.println("他讲的故事是：");
-		tellStory();
-	}
-}
-\end{lstlisting}
-
-\begin{tcolorbox}
-	\mybox{运行结果}
-	\begin{verbatim}
-从前有座山
-山里有座庙
-庙里有个老和尚和小和尚
-老和尚对小和尚在讲故事
-他讲的故事是：
-从前有座山
-山里有座庙
-庙里有个老和尚和小和尚
-老和尚对小和尚在讲故事
-他讲的故事是：
-...
-	\end{verbatim}
-\end{tcolorbox}
-
-递归函数一般需要定义递归的出口，即结束条件，确保递归能够在适合的地方退出。\\
-
-\mybox{阶乘}
-
-\begin{lstlisting}[language=Java]
-public class Factorial {
-	public static void main(String[] args) {
-		System.out.println("5! = " + factorial(5));
-	}
-	
-	public static int factorial(int n) {
-		if(n == 0 || n == 1) {
-			return 1;
-		}
-		return n * factorial(n-1);
-	}
-}
-\end{lstlisting}
-
-\begin{tcolorbox}
-	\mybox{运行结果}
-	\begin{verbatim}
-5! = 120
-	\end{verbatim}
-\end{tcolorbox}
-
-\begin{figure}[H]
-	\centering
-	\begin{tikzpicture}[]
-		\draw (0,0) rectangle (3,1.5);
-		\draw (3,-2) rectangle (6,-0.5);
-		\draw (6,-4) rectangle (9,-2.5);
-		\draw (9,-6) rectangle (12,-4.5);
-		\draw (12,-8) rectangle (15,-6.5);
-
-		\draw (12.75,-10.75) rectangle (14.25,-9.25);
-		\draw (9.75,-8.75) rectangle (11.25,-7.25);
-		\draw (6.75,-6.75) rectangle (8.25,-5.25);
-		\draw (3.75,-4.75) rectangle (5.25,-3.25);
-		\draw (0.75,-2.75) rectangle (2.25,-1.25);
-
-		\draw (1.5,0.75) node {$ factorial(5) $};
-		\draw (4.5,-1.25) node {$ factorial(4) $};
-		\draw (7.5,-3.25) node {$ factorial(3) $};
-		\draw (10.5,-5.25) node {$ factorial(2) $};
-		\draw (13.5,-7.25) node {$ factorial(1) $};
-
-		\draw (13.5,-10) node {$ 1 $};
-		\draw (10.5,-8) node {$ 2 $};
-		\draw (7.5,-6) node {$ 6 $};
-		\draw (4.5,-4) node {$ 24 $};
-		\draw (1.5,-2) node {$ 120 $};
-
-		\draw[->] (3,0.75) -- (4.5,0.75) -- (4.5,-0.5);
-		\draw[->] (6,-1.25) -- (7.5,-1.25) -- (7.5,-2.5);
-		\draw[->] (9,-3.25) -- (10.5,-3.25) -- (10.5,-4.5);
-		\draw[->] (12,-5.25) -- (13.5,-5.25) -- (13.5,-6.5);
-
-		\draw[->] (12.75,-10) -- (10.5,-10) -- (10.5,-8.75);
-		\draw[->] (9.75,-8) -- (7.5,-8) -- (7.5,-6.75);
-		\draw[->] (6.75,-6) -- (4.5,-6) -- (4.5,-4.75);
-		\draw[->] (3.75,-4) -- (1.5,-4) -- (1.5,-2.75);
-
-		\draw (4.5,1) node {$ 5 * factorial(4) $};
-		\draw (7.5,-1) node {$ 4 * factorial(3) $};
-		\draw (10.5,-3) node {$ 3 * factorial(2) $};
-		\draw (13.5,-5) node {$ 2 * factorial(1) $};
-
-		\draw (11,-10.5) node {$ 2 * 1 $};
-		\draw (8,-8.5) node {$ 3 * 2 $};
-		\draw (5,-6.5) node {$ 4 * 6 $};
-		\draw (2,-4.5) node {$ 5 * 24 $};
-	\end{tikzpicture}
-	\caption{阶乘}
-\end{figure}
-
-\mybox{斐波那契数列（递归）}
-
-\begin{lstlisting}[language=Java]
-public class FibonacciRecursive {
-	public static void main(String[] args) {
-		int n = 7;
-		System.out.println(
-			"斐波那契数列第" + n + "位："+ fibonacci(n)
-		);
-	}
-	
-	public static int fibonacci(int n) {
-		if(n == 1 || n == 2) {
-			return 1;
-		}
-		return fibonacci(n-2) + fibonacci(n-1);
-	}
-}
-\end{lstlisting}
-
-\begin{tcolorbox}
-	\mybox{运行结果}
-	\begin{verbatim}
-斐波那契数列第7位：13
-	\end{verbatim}
-\end{tcolorbox}
-
-\begin{figure}[H]
-	\centering
-	\begin{tikzpicture}[
-			level distance=2.4cm,
-			level 1/.style={sibling distance=6cm},
-			level 2/.style={sibling distance=3cm},
-			level 3/.style={sibling distance=2cm}
-		]
-		\node {$ f(5) $}
-		child {
-				node {$ f(3) $}
-				child {node {$ f(1) $}}
-				child {
-						node {$ f(2) $}
-						child {node {$ f(0) $}}
-						child {node {$ f(1) $}}
-					}
-			}
-		child {
-				node {$ f(4) $}
-				child {
-						node {$ f(2) $}
-						child {node {$ f(0) $}}
-						child {node {$ f(1) $}}
-					}
-				child {
-						node {$ f(3) $}
-						child {node {$ f(1) $}}
-						child {
-								node {$ f(2) $}
-								child {node {$ f(0) $}}
-								child {node {$ f(1) $}}
-							}
-					}
-			};
-	\end{tikzpicture}
-	\caption{递归树}
-\end{figure}
-
-\mybox{斐波那契数列（迭代）}
-
-\begin{lstlisting}[language=Java]
-public class FibonacciIterative {
-	public static void main(String[] args) {
-		int n = 7;
-		System.out.println(
-			"斐波那契数列第" + n + "位："+ fibonacci(n)
-		);
-	}
-	
-	public static int fibonacci(int n) {
-		int[] f = new int[n];
-		f[0] = f[1] = 1;
-		for(int i = 2; i < n; i++) {
-			f[i] = f[i-2] + f[i-1];
-		}
-		return f[n-1];
-	}
-}
-\end{lstlisting}
-
-\begin{tcolorbox}
-	\mybox{运行结果}
-	\begin{verbatim}
-斐波那契数列第7位：13
-	\end{verbatim}
-\end{tcolorbox}
+\begin{enumerate}
+	\item 修改属性的可见性来限制对属性的访问，一般限制为private。
+	\item 对每个属性提供对外的公共方法访问，也就是提供一对setter / getter，用于对私有属性的访问。
+\end{enumerate}
 
 \vspace{0.5cm}
 
-\mybox{阿克曼函数}
+\subsection{访问权限}
 
-\begin{align}\nonumber
-	A(m, n) =
-	\begin{cases}
-		n + 1             & m = 0        \\
-		A(m-1, 1)         & m > 0, n = 0 \\
-		A(m-1, A(m, n-1)) & m > 0, n > 0 \\
-	\end{cases}
-\end{align}
+属性和方法的访问权限一般分为3种：
 
-\begin{lstlisting}[language=Java]
-public class Ackermann {
-	public static void main(String[] args) {
-		System.out.println(A(3, 4));
-	}
-	
-	public static int A(int m, int n) {
-		if(m == 0) {
-			return n + 1;
-		} else if(m > 0 && n == 0) {
-			return A(m-1, 1);
-		} else {
-			return A(m-1, A(m, n-1));
-		}
-	}
+\begin{enumerate}
+	\item public：属性和方法在类的内部和外部都可以访问。
+	\item private：属性和方法只能在类内访问。
+	\item protected：属性和方法只能在类的内部和其派生类中访问。
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\subsection{this指针}
+
+每一个对象都能通过this指针来访问自身的地址，this指针是所有成员方法的隐含参数，在成员方法内部可以用来指向调用对象。\\
+
+在类中，属性的名字可以和局部变量的名字相同。此时，如果直接使用名字来访问，优先访问的是局部变量。因此，需要使用this指针来访问当前对象的属性。\\
+
+当需要访问的属性与局部变量没有重名的时候，this可以省略。\\
+
+\mybox{封装}
+
+\begin{lstlisting}[language=Java, title=Person.java]
+public class Person {
+    private String name;
+    private int age;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, title=TestPerson.java]
+public class TestPerson {
+    public static void main(String[] args) {
+        Person person = new Person();
+        person.setName("小灰");
+        person.setAge(17);
+        System.out.println("姓名：" + person.getName());
+        System.out.println("年龄：" + person.getAge());
+    }
 }
 \end{lstlisting}
 
 \begin{tcolorbox}
 	\mybox{运行结果}
 	\begin{verbatim}
-125
+姓名：小灰
+年龄：17
 	\end{verbatim}
 \end{tcolorbox}
 
-\begin{table}[H]
-	\centering
-	\setlength{\tabcolsep}{0.5mm}{
-		\begin{tabular}{|c|c|c|c|c|c|c|}
-			\hline
-			\diagbox{$ m $}{$ n $} & \textbf{$ 0 $} & \textbf{$ 1 $}    & \textbf{$ 2 $}    & \textbf{$ 3 $}          & \textbf{$ 4 $}    & \textbf{$ n $}                                         \\
-			\hline
-			\textbf{$ 0 $}         & $ 1 $          & $ 2 $             & $ 3 $             & $ 4 $                   & $ 5 $             & $ n + 1 $                                              \\
-			\hline
-			\textbf{$ 1 $}         & $ 2 $          & $ 3 $             & $ 4 $             & $ 5 $                   & $ 6 $             & $ 2 + (n + 3) - 3 $                                    \\
-			\hline
-			\textbf{$ 2 $}         & $ 3 $          & $ 5 $             & $ 7 $             & $ 9 $                   & $ 11 $            & $ 2(n + 3) - 3 $                                       \\
-			\hline
-			\textbf{$ 3 $}         & $ 5 $          & $ 13 $            & $ 29 $            & $ 61 $                  & $ 125 $           & $ 2^{n + 3} - 3 $                                      \\
-			\hline
-			\textbf{$ 4 $}         & $ 13 $         & $ 65533 $         & $ 2^{65536} - 3 $ & $ A(3, 2^{65536} - 3) $ & $ A(3, A(4, 3)) $ & $ \underbrace{2^{2^{.^{.^{.{^2}}}}}}_{n+3\ twos} - 3 $ \\
-			\hline
-			\textbf{$ 5 $}         & $ 65533 $      & $ A(4, 65533) $   & $ A(4, A(5, 1)) $ & $ A(4, A(5, 2)) $       & $ A(4, A(5, 3)) $ & $ \dots $                                              \\
-			\hline
-			\textbf{$ 6 $}         & $ A(5, 1) $    & $ A(5, A(5, 1)) $ & $ A(5, A(6, 1)) $ & $ A(5, A(6, 2)) $       & $ A(5, A(6, 3)) $ & $ \dots $                                              \\
-			\hline
-		\end{tabular}
-	}
-	\caption{阿克曼函数}
-\end{table}
+\newpage
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[]{img/C6/6-2/6.png}
-\end{figure}
+\section{构造方法}
 
-\mybox{汉诺塔}\\
+\subsection{构造方法（Constructor）}
 
-给定三根柱子，其中A柱子从大到小套有n个圆盘，问题是如何借助B柱子，将圆盘从A搬到C。\\
+构造方法也是一个方法，用于实例化对象，在实例化对象的时候调用。一般情况下，使用构造方法是为了在实例化对象的同时，给一些属性进行初始化赋值。\\
 
-规则：
-
-\begin{itemize}
-	\item 一次只能搬动一个圆盘
-	\item 不能将大圆盘放在小圆盘上面
-\end{itemize}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.4]{img/C6/6-2/7.png}
-\end{figure}
-
-递归算法求解汉诺塔问题：
+构造方法和普通方法的区别：
 
 \begin{enumerate}
-	\item 将前n-1个圆盘从A柱借助于C柱搬到B柱。
-	\item 将最后一个圆盘直接从A柱搬到C柱。
-	\item 将n-1个圆盘从B柱借助于A柱搬到C柱。
+	\item 构造方法的名字必须和类名一致。
+	\item 构造方法没有返回值，返回值类型部分不写。
 \end{enumerate}
 
-\begin{lstlisting}[language=Java]
-public class Hanoi {
-	public static int move = 0;		 // 移动次数
-	
-	public static void main(String[] args) {
-		hanoi(4, 'A', 'B', 'C');
-		System.out.println("步数==>" + move);
-	}
-	
-	/**
-	 * @brief  汉诺塔算法
-	 * @note   把 n 个盘子从 src 借助 mid 移到 dst
-	 * @param  n: 层数
-	 * @param  src: 起点柱子
-	 * @param  mid: 临时柱子
-	 * @param  dst: 目标柱子
-	 */
-	public static void hanoi(int n, char src, char mid, char dst) {
-		if(n == 1) {
-			System.out.println(n + "号盘：" + src + "->" + dst);
-			move++;
-		} else {
-			// 把前 n-1 个盘子从 src 借助 dst 移到 mid
-			hanoi(n-1, src, dst, mid);
-			// 移动第 n 个盘子
-			System.out.println(n + "号盘：" + src + "->" + dst);
-			move++;
-			// 把刚才的 n-1 个盘子从 mid 借助 src 移到 dst
-			hanoi(n-1, mid, src, dst);
-		}
-	}
+如果一个类中没有写构造方法，系统会自动提供一个public权限的无参构造方法，以便实例化对象。如果一个类中已经写了构造方法，此时系统将不再提供任何默认的构造方法。\\
+
+\mybox{构造方法}
+
+\begin{lstlisting}[language=Java, title=Person.java]
+public class Person {
+    private String name;
+    private int age;
+    
+    /**
+     * 无参构造方法
+     */
+    public Person() {
+        this.name = "";
+        this.age = 0;
+    }
+
+    /**
+     * 有参构造方法
+     */
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, title=TestPerson.java]
+public class TestPerson {
+    public static void main(String[] args) {
+        Person person = new Person("小灰", 17);
+        System.out.println("姓名：" + person.getName());
+        System.out.println("年龄：" + person.getAge());
+    }
 }
 \end{lstlisting}
 
 \begin{tcolorbox}
 	\mybox{运行结果}
 	\begin{verbatim}
-1号盘：A -> B
-2号盘：A -> C
-1号盘：B -> C
-3号盘：A -> B
-1号盘：C -> A
-2号盘：C -> B
-1号盘：A -> B
-4号盘：A -> C
-1号盘：B -> C
-2号盘：B -> A
-1号盘：C -> A
-3号盘：B -> C
-1号盘：A -> B
-2号盘：A -> C
-1号盘：B -> C
-步数 ==> 15
+姓名：小灰
+年龄：17
 	\end{verbatim}
 \end{tcolorbox}
 
