@@ -10,7 +10,7 @@ public class Circle {
         double r = scanner.nextDouble();
 
         double area = PI * Math.pow(r, 2);
-        System.out.printf("Area = %.2f", area);
+        System.out.printf("Area = %.2f\n", area);
     
         scanner.close();
     }

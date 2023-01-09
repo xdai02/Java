@@ -3,6 +3,6 @@ public class Casting {
         int total = 821;
         int num = 10;
         double average = (double)total / num;
-        System.out.printf("Average = %.2f", average);
+        System.out.printf("Average = %.2f\n", average);
     }
 }
