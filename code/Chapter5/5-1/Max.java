@@ -2,7 +2,6 @@ public class Max {
     public static void main(String[] args) {
         System.out.println(max(4, 12));
         System.out.println(max(54, 33));
-        System.out.println(max(0, -12));
         System.out.println(max(-999, -774));
     }
 
