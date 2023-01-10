@@ -1,137 +1,66 @@
-\chapter{继承}
+\chapter{多态}
 
-\section{继承}
+\section{抽象类}
 
-\subsection{继承（Inheritance）}
+\subsection{多态（Polymorphism）}
 
-继承是面向对象的三大特征之一，程序中的继承是类与类之间的特征和行为的一种赠予或获取。两个类之间的继承必须满足“is a”的关系。子类继承自父类，父类也称基类或超类，子类也称派生类。
+多态是同一个行为具有多个不同表现形式或形态的能力。例如可以把一只哈士奇，当成它的父类去看待，因此哈士奇是一只狗、一个动物或一个生物。\\
 
-\begin{figure}[H]
-	\centering
-	\begin{tikzpicture}
-		\begin{class}{Animal}{0,0}
-			\attribute{- age}
-			\attribute{- gender}
-			\operation{+ eat() : void}
-			\operation{+ sleep() : void}
-		\end{class}
+通过父类引用指向子类对象，例如Animal animal = new Dog()，从而产生多种形态。父类引用仅能访问父类所声明的属性和方法，不能访问子类独有的属性和方法。\\
 
-		\begin{class}{Dog}{-5,-5}
-			\inherit{Animal}
-			\attribute{- type}
-			\operation{+ bite() : void}
-		\end{class}
+在一对有继承关系的类中都有一个方法，其方法名、参数列表、返回值均相同，通过调用方法实现不同类对象完成不同的事件。\\
 
-		\begin{class}{Cat}{5,-5}
-			\inherit{Animal}
-			\attribute{- hairColor}
-			\operation{+ mewing() : void}
-		\end{class}
-	\end{tikzpicture}
-	\caption{继承}
-\end{figure}
+\subsection{抽象类（Abstract Class）}
 
-产生继承关系后，子类可以使用父类中的属性和方法，也可以定义子类独有的属性和方法。
+抽象类不能被用于实例化对象，只是提供了所有的子类共有的部分。例如在动物园中，存在的都是“动物”具体的子类对象，并不存在“动物”对象，所以动物类不应该被独立创建成对象。\\
 
-\vspace{-0.5cm}
+抽象类的作用是可以被子类继承，提供共性的属性和方法。\\
 
-\begin{lstlisting}[language=Java]
-class subclass extends superclass {
-    // code
-}
-\end{lstlisting}
+\subsection{抽象方法（Abstract Method）}
 
-继承时通常使用public类型。当一个类public继承于父类时，父类的public成员也是子类的public成员，父类的protected成员也是子类的protected成员，父类的private成员不能被继承。\\
+父类提供的方法很难满足子类不同的需求，如果不定义该方法，则表示所有的子类都不具有该行为。如果定义该方法，所有的子类都在重写，那么这个方法在父类中是没有必要实现的，显得多余。\\
 
-继承的好处是可以提高代码的复用性、提高代码的拓展性。\\
+被abstract关键字修饰的方法称为抽象方法。抽象方法只有声明，没有实现。抽象方法只能包含在抽象类中。产生继承关系后，子类必须重写父类中所有的抽象方法，否则子类还是抽象类。\\
 
-父类中以下内容是不可以被继承的：
+非抽象类在继承自一个抽象父类的同时，必须重写实现父类中所有的抽象方法。因此，抽象类可以用来做一些简单的规则制定。在抽象类中制定一些规则，要求所有的子类必须实现，约束所有子类的行为。\\
 
-\begin{enumerate}
-	\item 构造方法：构造方法是为了创建当前类的对象的。
-	\item 私有成员：私有成员只能在当前的类中使用。
-	\item 跨包子类：默认权限的属性、方法，不可以继承给跨包的子类。
-\end{enumerate}
+但是，类是单继承的，一个类有且只能有一个父类，所以如果一个类需要受到多种规则的约束，无法再继承其它父类。此时可以使用接口进行这样的复杂的规则制定。
 
-\vspace{0.5cm}
+\newpage
 
-\subsection{访问权限修饰符}
+\section{对象转型}
 
-访问权限修饰符，就是修饰类、属性的访问权限。
+\subsection{对象转型}
 
-\begin{table}[H]
-	\centering
-	\setlength{\tabcolsep}{5mm}{
-		\begin{tabular}{|c|c|c|c|c|}
-			\hline
-			\textbf{访问权限修饰符}  & \textbf{当前类} & \textbf{同包其它类} & \textbf{跨包子类} & \textbf{跨包其它类} \\
-			\hline
-			\textbf{private}         & \checkmark      & \XSolidBrush        & \XSolidBrush      & \XSolidBrush        \\
-			\hline
-			\textbf{default（不写）} & \checkmark      & \checkmark          & \XSolidBrush      & \XSolidBrush        \\
-			\hline
-			\textbf{protected}       & \checkmark      & \checkmark          & \checkmark        & \XSolidBrush        \\
-			\hline
-			\textbf{public}          & \checkmark      & \checkmark          & \checkmark        & \checkmark          \\
-			\hline
-		\end{tabular}
-	}
-	\caption{访问权限修饰符}
-\end{table}
+对象由子类类型转型为父类类型，即是向上转型。向上转型是一种隐式转换，一定会转型成功。向上转型后的对象，只能访问父类中定义的成员。\\
 
-\vspace{0.5cm}
+由父类类型转型转型为子类类型，即是向下转型。向下转型存在失败的可能性，会出现ClassCastException异常。向下转型需要进行强制类型转换，是一个显式转换。向下转型后的对象，将可以访问子类中独有的成员。\\
 
-\subsection{super}
+向下转型存在失败的可能性。如果引用实际指向的对象，不是要转型的类型，此时强制转换会出现ClassCastException异常。所以，在向下转型之前，最好使用instanceof关键字进行类型检查。\\
 
-使用super可以调用父类的方法。子类对象在实例化的时候，需要先实例化从父类继承到的部分，此时默认调用父类中的无参构造方法。\\
-
-如果父类中没有无参构造方法，对所有的子类对象实例化都会造成影响，导致子类对象无法实例化。\\
-
-解决方法有两种：
-
-\begin{enumerate}
-	\item 为父类添加无参构造方法。
-	\item 在子类的构造方法中，使用super()调用父类中的有参构造函数。
-\end{enumerate}
-
-\mybox{继承}
+\mybox{对象转型}
 
 \begin{lstlisting}[language=Java, title=Animal.java]
-public class Animal {
+public abstract class Animal {
     private String name;
-    private int age;
 
-    public Animal() {
-        this.name = "";
-        this.age = 0;
-    }
-
-    public Animal(String name, int age) {
+    public Animal(String name) {
         this.name = name;
-        this.age = age;
-    }
-    
-    public void eat() {
-        System.out.println("吃饭");
     }
 
-    public void sleep() {
-        System.out.println("睡觉");
-    }
+    public abstract void makeSound();
 }
 \end{lstlisting}
 
 \begin{lstlisting}[language=Java, title=Dog.java]
 public class Dog extends Animal {
-    private String type;
-
-    public Dog(String name, int age, String type) {
-        super(name, age);
-        this.type = type;
+    public Dog(String name) {
+        super(name);
     }
     
-    public void bite() {
-        System.out.println("咬人");
+    @Override
+    public void makeSound() {
+        System.out.println("汪汪~");
     }
 }
 \end{lstlisting}
@@ -139,10 +68,11 @@ public class Dog extends Animal {
 \begin{lstlisting}[language=Java, title=TestDog.java]
 public class TestDog {
     public static void main(String[] args) {
-        Dog dog = new Dog("狗子", 3, "哈士奇");
-        dog.eat();
-        dog.sleep();
-        dog.bite();
+        Animal animal = new Dog("狗子");
+        if(animal instanceof Dog) {
+            Dog dog = (Dog)animal;
+            dog.makeSound();
+        }
     }
 }
 \end{lstlisting}
@@ -150,165 +80,113 @@ public class TestDog {
 \begin{tcolorbox}
 	\mybox{运行结果}
 	\begin{verbatim}
-吃饭
-睡觉
-咬人
+汪汪~
 	\end{verbatim}
 \end{tcolorbox}
 
 \newpage
 
-\section{重写}
+\section{接口}
 
-\subsection{toString()}
+\subsection{接口}
 
-Object类是Java中类层次的根类，所有的类都直接或者间接地继承自Object类。Object类的toString()方法返回一个字符串，该字符串由类名、标记符【@】和此对象的哈希码的无符号十六进制表示组成。\\
+在面向对象中会使用抽象类为外部提供一个通用的、标准化的接口。\\
 
-\mybox{toString()}
+宏观上来讲，接口是一种标准。例如常见的USB接口，电脑通过USB接口连接各种外设设备，每一个接口不用关心连接的外设设备是什么，只要这个外设设备实现了USB的标准，就可以连接到电脑上。\\
 
-\begin{lstlisting}[language=Java, title=Dog.java]
-public class Dog extends Animal {
-    private String name;
-    private String type;
-    
-    public Dog(String name, String type) {
-        this.name = name;
-        this.type = type;
-    }   
-}
-\end{lstlisting}
+从程序上来讲，接口代表了某种能力和约定。当父类的方法无法满足子类需求时，可实现接口扩充子类的能力，接口中方法的定义代表能力的具体要求。\\
 
-\begin{lstlisting}[language=Java, title=TestDog.java]
-public class TestDog {
-    public static void main(String[] args) {
-        Dog dog = new Dog("狗子", "哈士奇");
-        System.out.println(dog);
-    }
-}
-\end{lstlisting}
-
-\begin{tcolorbox}
-	\mybox{运行结果}
-	\begin{verbatim}
-Dog@28a418fc
-	\end{verbatim}
-\end{tcolorbox}
-
-\vspace{0.5cm}
-
-\subsection{重写（Override）}
-
-子类可以继承到父类中的属性和方法，但是有些方法，子类的实现与父类的方法可能实现的不同。当父类提供的方法已经不能满足子类的需求时，子类中可以定义与父类相同的方法。此时，子类方法完成对父类方法的覆盖，称为重写。\\
-
-重写方法需要注意以下几点：
+定义接口需要使用关键字interface，接口中可以定义：
 
 \begin{enumerate}
-	\item 方法名字必须和父类方法名字相同。
-	\item 参数列表必须和父类一致。
-	\item 方法的访问权限需要大于等于父类方法的访问权限。
-	\item 方法的返回值类型需要小于等于父类方法的返回值类型。
+	\item 属性：默认都是静态常量，访问权限都是public。
+	\item 方法：默认都是抽象方法，访问权限都是public。
 \end{enumerate}
 
-@Override是一个注解，用于进行重写前的校验，校验一个方法是否是一个重写的方法，如果不是重写的方法，会直接报错。\\
+接口和抽象类的相同点有：
 
-@Override只是对方法进行重写的验证，与这个方法是不是重写方法无关。在写重写方法的时候，这个注解最好加上。\\
+\begin{enumerate}
+	\item 都不能创建对象。
+	\item 都具备Object类中所定义的方法。
+	\item 都可以写抽象方法。
+\end{enumerate}
 
-\mybox{重写toString()}
+接口和抽象类的不同点有：
 
-\begin{lstlisting}[language=Java, title=Dog.java]
-public class Dog {
-    private String name;
-    private String type;
-    
-    public Dog(String name, String type) {
-        this.name = name;
-        this.type = type;
-    }
+\begin{enumerate}
+	\item 接口中所有的属性都是公开静态常量，缺省用public static final修饰。
+	\item 接口中所有的方法都是公开抽象方法，缺省用public abstract修饰。
+	\item 接口中没有构造方法、构造代码段和静态代码段。
+\end{enumerate}
 
+因为接口中有很多抽象方法，因此非抽象类在实现接口的时候必须重写实现接口中所有的抽象方法。\\
+
+使用接口可以进行对行为的约束和规则的制定，接口表示一组能力，那么一个类可以接受多种能力的约束。因此一个类可以实现多个接口，实现多个接口的时候，必须要把每一个接口中的方法都实现。如果一个类实现的多个接口中有相同的方法，实现类只需实现一次即可。\\
+
+\mybox{接口}
+
+\begin{lstlisting}[language=Java, title=USB.java]
+public interface USB {
+    /**
+     * USB接口返回当前连接设备的类型
+     * @return 当前连接设备
+     */
+    String getDeviceInfo();
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, title=Mouse.java]
+public class Mouse implements USB {
     @Override
-    public String toString() {
-        return "我叫" + this.name + "，我是一只" + this.type;
+    public String getDeviceInfo() {
+        return "mouse";
     }
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=Java, title=TestDog.java]
-public class TestDog {
-    public static void main(String[] args) {
-        Dog dog = new Dog("狗子", "哈士奇");
-        System.out.println(dog);
+\begin{lstlisting}[language=Java, title=Keyboard.java]
+public class Keyboard implements USB {
+    @Override
+    public String getDeviceInfo() {
+        return "keyboard";
     }
 }
 \end{lstlisting}
 
-\begin{tcolorbox}
-	\mybox{运行结果}
-	\begin{verbatim}
-我叫狗子，我是一只哈士奇
-	\end{verbatim}
-\end{tcolorbox}
-
-\vspace{0.5cm}
-
-\subsection{equals()}
-
-【==】运算符默认比较的是两个对象的地址，如果地址相同则为true，否则为false。\\
-
-equals()方法默认返回地址比较，通过重写equals()方法，可以自定义两个对象的等值比较规则。\\
-
-\mybox{重写equals()}
-
-\begin{lstlisting}[language=Java, title=Dog.java]
-public class Dog {
-    private String name;
-    private int age;
-    private String type;
-
-    public Dog(String name, int age, String type) {
-        this.name = name;
-        this.age = age;
-        this.type = type;
+\begin{lstlisting}[language=Java, title=Computer.java]
+public class Computer {
+    // 电脑有2个USB接口
+    private USB usb1;
+    private USB usb2;
+    
+    public void setUsb1(USB usb1) {
+        this.usb1 = usb1;
+    }
+    
+    public void setUsb2(USB usb2) {
+        this.usb2 = usb2;
     }
     
     /**
-     * 自定义规则：实现两个对象的等值比较
-     * @param obj - 需要比较的对象
-     * @return 比较的结果：相同true，不同false 
+     * 获取USB接口连接设备的信息
      */
-    @Override
-    public boolean equals(Object obj) {
-        // 1. 如果两个对象地址相同，返回true
-        if(this == obj) {
-            return true;
-        }
-        
-        // 2. 如果obj是null，返回false
-        if(obj == null) {
-            return false;
-        }
-        
-        // 3. 如果两个对象类型不同，返回false
-        if(this.getClass() != obj.getClass()) {
-            return false;
-        }
-        
-        // 4. 如果两个对象中的属性全部相同，返回true，否则返回false
-        Dog dog = (Dog)obj;
-        return this.name.equals(dog.name) 
-                && this.age == dog.age 
-                && this.type.equals(dog.type);
+    public String getUsbInfo() {
+        return "USB 1: " + this.usb1.getDeviceInfo() + "\n"
+                + "USB 2: " + this.usb2.getDeviceInfo();
     }
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=Java, title=TestDog.java]
-public class TestDog {
+\begin{lstlisting}[language=Java, title=TestUsb.java]
+public class TestUsb {
     public static void main(String[] args) {
-        Dog dog1 = new Dog("狗子", 3, "哈士奇");
-        Dog dog2 = new Dog("狗子", 3, "哈士奇");
+        Computer computer = new Computer();
         
-        System.out.println(dog1 == dog2);
-        System.out.println(dog1.equals(dog2));
+        // 外设设备连接到电脑上
+        computer.setUsb1(new Mouse());
+        computer.setUsb2(new Keyboard());
+        
+        System.out.println(computer.getUsbInfo());
     }
 }
 \end{lstlisting}
@@ -316,8 +194,8 @@ public class TestDog {
 \begin{tcolorbox}
 	\mybox{运行结果}
 	\begin{verbatim}
-false
-true
+USB 1: mouse
+USB 2: keyboard
 	\end{verbatim}
 \end{tcolorbox}
 

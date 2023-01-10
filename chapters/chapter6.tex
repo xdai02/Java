@@ -1,181 +1,172 @@
-\chapter{封装}
-
-\section{面向过程与面向对象}
-
-\subsection{面向过程（Procedure Oriented）}
-
-面向过程是一种以过程为中心的编程思想，以什么正在发生为主要目标进行编程，分析出解决问题所需要的步骤，然后用函数把这些步骤一步一步实现，使用的时候一个一个依次调用。\\
-
-C语言就是一种面向过程的编程语言，但是面向过程的缺陷是数据和函数并不完全独立，使用两个不同的实体表示信息及其操作。\\
-
-\subsection{面向对象（Object Oriented）}
-
-面向对象是相对于面向过程来讲的，面向对象方法把相关的数据和方法组织为一个整体来看待，从更高的层次来进行系统建模，更贴近事物的自然运行模式。\\
-
-在面向对象中，把构成问题的事物分解成各个对象，建立对象的目的不是为了完成一个步骤，而是为了描叙某个事物在整个解决问题的步骤中的行为。\\
-
-Java、C++、Python等都是面向对象的编程语言，面向对象的优势在于只是用一个实体就能同时表示信息及其操作。\\
-
-面向对象三大特性：
-
-\begin{enumerate}
-	\item 封装（encapsulation）：数据和代码捆绑，避免外界干扰和不确定性访问。
-	\item 继承（inheritance）：让某种类型对象获得另一类型对象的属性和方法。
-	\item 多态（polymorphism）：同一事物表现出不同事物的能力。
-\end{enumerate}
-
-\newpage
-
-\section{类与对象}
-
-\subsection{类与对象}
-
-类（class）表示同一类具有相同特征和行为的对象的集合，类定义了对象的属性和方法。\\
-
-对象（object）是类的实例，对象拥有属性和方法。\\
-
-类的设计需要使用关键字class，类名是一个标识符，遵循大驼峰命名法。类中可以包含属性和方法。其中，属性通过变量表示，又称实例变量；方法用于描述行为，又称实例方法。\\
-
-通过关键字new进行对象的实例化，实例化对象会调用类中的构造函数完成。类是一种引用数据类型，对象的实例化在堆上开辟空间。\\
-
-\mybox{类和对象}
-
-\begin{lstlisting}[language=Java, title=Person.java]
-public class Person {
-    // 属性：描述所有对象共有的特征
-    public String name;
-    public int age;
-    public String gender;
-
-    // 方法：描述所有对象共有的功能
-    public void eat() {
-        System.out.println("吃饭");
-    }
-
-    public void sleep() {
-        System.out.println("睡觉");
-    }
-}
-\end{lstlisting}
-
-\begin{lstlisting}[language=Java, title=TestPerson.java]
-public class TestPerson {
-    public static void main(String[] args) {
-        Person zhangsan = new Person();
-        zhangsan.name = "张三";
-        zhangsan.age = 18;
-        zhangsan.gender = "男";
-
-        Person lisi = new Person();
-        lisi.name = "李四";
-        lisi.age = 22;
-        lisi.gender = "女";
-
-        System.out.println("姓名：" + zhangsan.name 
-                            + " 年龄：" + zhangsan.age
-                            + " 性别：" + zhangsan.gender);
-        System.out.println("姓名：" + lisi.name 
-                            + " 年龄：" + lisi.age
-                            + " 性别：" + lisi.gender);
-        
-        zhangsan.eat();
-        lisi.sleep();
-    }
-}
-\end{lstlisting}
-
-\begin{tcolorbox}
-	\mybox{运行结果}
-	\begin{verbatim}
-姓名：张三 年龄：18 性别：男
-姓名：李四 年龄：22 性别：女
-吃饭
-睡觉
-	\end{verbatim}
-\end{tcolorbox}
-
-\newpage
+\chapter{面向对象}
 
 \section{封装}
 
-\subsection{封装（Encapsulation）}
+\subsection{类与对象}
 
-封装是面向对象方法的重要原则，就是把对象的属性和方法结合为一个独立的整体，并尽可能隐藏对象的内部实现细节。\\
+在面向对象编程中，把构成问题的事物分解成各个对象，每个对象都有自己的数据和行为，程序通过对象之间的交互来实现功能。\\
 
-封装可以认为是一个保护屏障，防止该类的数据被外部类随意访问。要访问该类的数据，必须通过严格的接口控制。合适的封装可以让代码更容易理解和维护，也加强了程序的安全性。\\
+类（class）是一个模板，定义了对象的属性和方法，用来描述同一类对象的共同特征和行为。对象（object）是类的实例，它具有类定义的属性和方法。\\
 
-实现封装的步骤：
+关键字new可以实例化一个类对象，之后就可以通过访问对象的属性和方法来操作对象。\\
 
-\begin{enumerate}
-	\item 修改属性的可见性来限制对属性的访问，一般限制为private。
-	\item 对每个属性提供对外的公共方法访问，也就是提供一对setter / getter，用于对私有属性的访问。
-\end{enumerate}
+\mybox{银行账户}
 
-\vspace{0.5cm}
+\begin{lstlisting}[language=Java]
+public class BankAccount {
+    String owner;
+    String account;
+    double balance;
 
-\subsection{访问权限}
-
-属性和方法的访问权限一般分为3种：
-
-\begin{enumerate}
-	\item public：属性和方法在类的内部和外部都可以访问。
-	\item private：属性和方法只能在类内访问。
-	\item protected：属性和方法只能在类的内部和其派生类中访问。
-\end{enumerate}
-
-\vspace{0.5cm}
-
-\subsection{this指针}
-
-每一个对象都能通过this指针来访问自身的地址，this指针是所有成员方法的隐含参数，在成员方法内部可以用来指向调用对象。\\
-
-在类中，属性的名字可以和局部变量的名字相同。此时，如果直接使用名字来访问，优先访问的是局部变量。因此，需要使用this指针来访问当前对象的属性。\\
-
-当需要访问的属性与局部变量没有重名的时候，this可以省略。\\
-
-\mybox{封装}
-
-\begin{lstlisting}[language=Java, title=Person.java]
-public class Person {
-    private String name;
-    private int age;
-
-    public void setName(String name) {
-        this.name = name;
+    public void deposit(double amount) {
+        balance += amount;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getAge() {
-        return age;
+    public void withdraw(double amount) {
+        balance -= amount;
     }
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=Java, title=TestPerson.java]
-public class TestPerson {
+\begin{lstlisting}[language=Java]
+public class Bank {
     public static void main(String[] args) {
-        Person person = new Person();
-        person.setName("小灰");
-        person.setAge(17);
-        System.out.println("姓名：" + person.getName());
-        System.out.println("年龄：" + person.getAge());
+        BankAccount account = new BankAccount();
+        account.owner = "Terry";
+        account.account = "6250941006528599";
+        account.balance = 50;
+
+        System.out.println("Owner: " + account.owner);
+        System.out.println("Account: " + account.account);
+        System.out.println("Balance: " + account.balance);
+
+        account.deposit(100);
+        System.out.println("Balance: " + account.balance);
+
+        account.withdraw(70);
+        System.out.println("Balance: " + account.balance);
     }
 }
 \end{lstlisting}
 
 \begin{tcolorbox}
-	\mybox{运行结果}
-	\begin{verbatim}
-姓名：小灰
-年龄：17
-	\end{verbatim}
+    \mybox{运行结果}
+    \begin{verbatim}
+Owner: Terry
+Account: 6250941006528599
+Balance: 50.0
+Balance: 150.0
+Balance: 80.0
+\end{verbatim}
+\end{tcolorbox}
+
+\vspace{0.5cm}
+
+\subsection{封装（Encapsulation）}
+
+封装是面向对象的重要原则，尽可能隐藏对象的内部实现细节。封装可以认为是一个保护屏障，防止该类的数据被外部随意访问。当要访问该类的数据时，必须通过指定的接口。合适的封装可以让代码更容易理解和维护，也加强了程序的安全性。\\
+
+为了实现封装，需要对类的属性和方法进行访问权限的控制：
+
+\begin{enumerate}
+    \item public：允许任何地方访问。
+    \item private：只允许在类的内部访问。
+    \item protected：只允许在类的内部和子类中访问。
+    \item default：只允许在同一个包中访问。
+\end{enumerate}
+
+通常会将类的属性设置为private，然后对外提供一对setter/getter方法来访问该属性。\\
+
+为了避免方法的参数与类的属性重名造成歧义，可以使用this关键字用来指代当前对象。\\
+
+\mybox{银行账户}
+
+\begin{lstlisting}[language=Java]
+public class BankAccount {
+    private final int ACCOUNT_DIGITS = 16;
+
+    private String owner;
+    private String account;
+    private double balance;
+
+    public void setOwner(String owner) {
+        if (!owner.isEmpty()) {
+            this.owner = owner;
+        }
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setaccount(String account) {
+        if (account.length() == ACCOUNT_DIGITS) {
+            this.account = account;
+        }
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setBalance(double balance) {
+        if (balance >= 0) {
+            this.balance = balance;
+        }
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public boolean deposit(double amount) {
+        if (amount <= 0) {
+            return false;
+        }
+        balance += amount;
+        return true;
+    }
+
+    public boolean withdraw(double amount) {
+        if (amount <= 0 || amount > balance) {
+            return false;
+        }
+        balance -= amount;
+        return true;
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+public class Bank {
+    public static void main(String[] args) {
+        BankAccount account = new BankAccount();
+        account.setOwner("Terry");
+        account.setAccount("6250941006528599");
+        account.setBalance(50);
+
+        System.out.println("Owner: " + account.getOwner());
+        System.out.println("Account: " + account.getAccount());
+        System.out.println("Balance: " + account.getBalance());
+
+        account.deposit(100);
+        System.out.println("Balance: " + account.getBalance());
+
+        account.withdraw(70);
+        System.out.println("Balance: " + account.getBalance());
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+    \mybox{运行结果}
+    \begin{verbatim}
+Owner: Terry
+Account: 6250941006528599
+Balance: 50.0
+Balance: 150.0
+Balance: 80.0
+\end{verbatim}
 \end{tcolorbox}
 
 \newpage
@@ -184,64 +175,426 @@ public class TestPerson {
 
 \subsection{构造方法（Constructor）}
 
-构造方法也是一个方法，用于实例化对象，在实例化对象的时候调用。一般情况下，使用构造方法是为了在实例化对象的同时，给一些属性进行初始化赋值。\\
+构造方法是一种特殊的方法，会在创建对象时自动调用，用于创建并初始化对象。每个类可以有一个或多个构造方法，构造方法的名字必须和类名一致。构造方法没有返回值，返回值类型部分不写。
 
-构造方法和普通方法的区别：
+\vspace{-0.5cm}
 
-\begin{enumerate}
-	\item 构造方法的名字必须和类名一致。
-	\item 构造方法没有返回值，返回值类型部分不写。
-\end{enumerate}
+\begin{lstlisting}[language=Java]
+public BankAccount() {
+    owner = "admin";
+    account = "0000000000000000";
+    balance = 0;
+}
+\end{lstlisting}
 
-如果一个类中没有写构造方法，系统会自动提供一个public权限的无参构造方法，以便实例化对象。如果一个类中已经写了构造方法，此时系统将不再提供任何默认的构造方法。\\
+如果一个类中没有写构造方法，系统会自动提供一个public的无参构造方法，以便实例化对象。如果一个类中已经写了构造方法，系统将不会再提供默认的无参构造方法。
 
-\mybox{构造方法}
+\vspace{-0.5cm}
 
-\begin{lstlisting}[language=Java, title=Person.java]
-public class Person {
+\begin{lstlisting}[language=Java]
+public BankAccount(String owner, String account, double balance) {
+    if (!owner.isEmpty()) {
+        this.owner = owner;
+    }
+
+    if (account.length() == ACCOUNT_DIGITS) {
+        this.account = account;
+    }
+
+    if (balance >= 0) {
+        this.balance = balance;
+    }
+}
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+\subsection{重载（Overload）}
+
+重载用于在同一个类定义多个同名方法，但是这些方法的参数列表不同。重载的主要用途是提供方法的多种版本，以便满足不同的需求。\\
+
+重载还可以使代码更具可读性，因为它使得方法名更具描述性，而不必考虑特定的参数列表。\\
+
+\mybox{银行账户}
+
+\begin{lstlisting}[language=Java]
+public class BankAccount {
+    private final int ACCOUNT_DIGITS = 16;
+
+    private String owner;
+    private String account;
+    private double balance;
+
+    public BankAccount() {
+        owner = "admin";
+        account = "0000000000000000";
+        balance = 0;
+    }
+
+    public BankAccount(String owner, String account, double balance) {
+        if (!owner.isEmpty()) {
+            this.owner = owner;
+        }
+
+        if (account.length() == ACCOUNT_DIGITS) {
+            this.account = account;
+        }
+
+        if (balance >= 0) {
+            this.balance = balance;
+        }
+    }
+
+    public void setOwner(String owner) {
+        if (!owner.isEmpty()) {
+            this.owner = owner;
+        }
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setAccount(String account) {
+        if (account.length() == ACCOUNT_DIGITS) {
+            this.account = account;
+        }
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setBalance(double balance) {
+        if (balance >= 0) {
+            this.balance = balance;
+        }
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public boolean deposit(double amount) {
+        if (amount <= 0) {
+            return false;
+        }
+        balance += amount;
+        return true;
+    }
+
+    public boolean withdraw(double amount) {
+        if (amount <= 0 || amount > balance) {
+            return false;
+        }
+        balance -= amount;
+        return true;
+    }
+
+    public boolean withdraw(double amount, double fee) {
+        if(amount <= 0 || amount + fee > balance) {
+            return false;
+        }
+
+        balance -= amount + fee;
+        return true;
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+public class Bank {
+    public static void main(String[] args) {
+        BankAccount account1 = new BankAccount();
+        System.out.println(
+                "Account 1 Owner: " + account1.getOwner()
+        );
+        System.out.println(
+                "Account 1 Account: " + account1.getAccount()
+        );
+        System.out.println(
+                "Account 1 Balance: " + account1.getBalance()
+        );
+
+        BankAccount account2 = new BankAccount(
+                "Terry", "6250941006528599", 50
+        );
+        System.out.println(
+                "Account 2 Balance: " + account2.getBalance()
+        );
+
+        account2.withdraw(20);
+        System.out.println(
+                "Account 2 Balance: " + account2.getBalance()
+        );
+
+        account2.withdraw(10, 1);
+        System.out.println(
+                "Account 2 Balance: " + account2.getBalance()
+        );
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+    \mybox{运行结果}
+    \begin{verbatim}
+Account 1 Owner: admin
+Account 1 Account: 0000000000000000
+Account 1 Balance: 0.0
+Account 2 Balance: 50.0
+Account 2 Balance: 30.0
+Account 2 Balance: 19.0  
+	\end{verbatim}
+\end{tcolorbox}
+
+\newpage
+
+\section{继承}
+
+\subsection{继承（Inheritance）}
+
+继承指一个类可以继承另一个类的特征和行为，并可以对其进行扩展。这样就可以避免在多个类中重复定义相同的特征和行为。\\
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{class}[text width = 5cm]{Product}{0,0}
+            \attribute{- name}
+            \attribute{- price}
+            \operation{+ Product(String, double)}
+            \operation{+ getName() : String}
+            \operation{+ getPrice() : double}
+            \operation{+ setName(String) : void}
+            \operation{+ setPrice(double) : void}
+        \end{class}
+
+        \begin{class}[text width = 6cm]{Food}{-4,-7}
+            \inherit{Product}
+            \attribute{- calories}
+            \operation{+ Food(String, double, int)}
+            \operation{+ getCalories() : int}
+            \operation{+ setCalories(int) : void}
+        \end{class}
+
+        \begin{class}[text width = 6cm]{Drink}{4,-7}
+            \inherit{Product}
+            \attribute{- size}
+            \operation{+ Drink(String, double, String)}
+            \operation{+ getSize() : String}
+            \operation{+ setSize(String) : void}
+        \end{class}
+    \end{tikzpicture}
+    \caption{继承}
+\end{figure}
+
+extends关键字用于指定一个类继承于另一个类，产生继承关系后，子类可以通过super关键字调用父类中的属性和方法，也可以定义子类独有的属性和方法。\\
+
+在创建子类对象时，会先调用父类的构造方法，然后再调用子类的构造方法。因此父类中必须存在一个构造方法，否则将无法创建子类对象。\\
+
+\mybox{麦当劳}
+
+\begin{lstlisting}[language=Java]
+public class Product {
     private String name;
-    private int age;
-    
-    /**
-     * 无参构造方法
-     */
-    public Person() {
-        this.name = "";
-        this.age = 0;
-    }
+    private double price;
 
-    /**
-     * 有参构造方法
-     */
-    public Person(String name, int age) {
+    public Product(String name, double price) {
         this.name = name;
-        this.age = age;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+        this.price = price;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getAge() {
-        return age;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=Java, title=TestPerson.java]
-public class TestPerson {
+\begin{lstlisting}[language=Java]
+public class Food extends Product {
+    int calories;
+
+    public Food(String name, double price, int calories) {
+        super(name, price);
+        this.calories = calories;
+    }
+
+    public int getCalories() {
+        return calories;
+    }
+
+    public void setCalories(int calories) {
+        this.calories = calories;
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+public class Drink extends Product {
+    private String size;
+
+    public Drink(String name, double price, String size) {
+        super(name, price);
+        this.size = size;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+public class McDonalds {
     public static void main(String[] args) {
-        Person person = new Person("小灰", 17);
-        System.out.println("姓名：" + person.getName());
-        System.out.println("年龄：" + person.getAge());
+        Food food = new Food("Cheeseburger", 5.45, 302);
+        Drink drink = new Drink("Coke", 3.7, "Large");
+
+        System.out.printf(
+                "Food: %s ($%.2f) %d Kcal\n",
+                food.getName(), food.getPrice(), food.getCalories()
+        );
+        System.out.printf(
+                "Drink: %s ($%.2f) %s\n",
+                drink.getName(), drink.getPrice(), drink.getSize()
+        );
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+    \mybox{运行结果}
+    \begin{verbatim}
+Food: Cheeseburger ($5.45) 302 Kcal
+Drink: Coke ($3.70) Large
+	\end{verbatim}
+\end{tcolorbox}
+
+\vspace{0.5cm}
+
+\subsection{重写（Override）}
+
+Object类是所有类的根类，所有的类都直接或者间接地继承自Object类。Object类中包含的方法在其它所有类中都可以使用，例如getClass()、hashCode()、toString()、clone()、equals()等。\\
+
+当直接输出一个对象时，会自动调用该对象的toString()方法，将其以字符串的形式输出。
+
+\vspace{-0.5cm}
+
+\begin{lstlisting}[language=Java]
+System.out.println(food);   // Food@41629346
+\end{lstlisting}
+
+在没有重写toString()方法的情况下，输出的内容是对象的类名及其哈希码（hash code），但这并不是预期想要的结果。因此，可以重写从父类继承的toString()，以满足程序的需求。\\
+
+在重写方法时，需要使用@Override注解，以便编译器检查该方法是否真的是从父类继承的。\\
+
+\mybox{麦当劳}
+
+\begin{lstlisting}[language=Java]
+public class Product {
+    private String name;
+    private double price;
+
+    public Product(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s ($%.2f)", name, price);
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+public class Food extends Product {
+    int calories;
+
+    public Food(String name, double price, int calories) {
+        super(name, price);
+        this.calories = calories;
+    }
+
+    public int getCalories() {
+        return calories;
+    }
+
+    public void setCalories(int calories) {
+        this.calories = calories;
+    }
+
+    @Override
+    public String toString() {
+        return "Food: " + super.toString() + " " + calories + " Kcal";
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+public class Drink extends Product {
+    private String size;
+
+    public Drink(String name, double price, String size) {
+        super(name, price);
+        this.size = size;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    @Override
+    public String toString() {
+        return "Drink: " + super.toString() + " " + size;
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+public class McDonalds {
+    public static void main(String[] args) {
+        Food food = new Food("Cheeseburger", 5.45, 302);
+        Drink drink = new Drink("Coke", 3.7, "Large");
+
+        System.out.println(food);
+        System.out.println(drink);
     }
 }
 \end{lstlisting}
@@ -249,8 +602,81 @@ public class TestPerson {
 \begin{tcolorbox}
 	\mybox{运行结果}
 	\begin{verbatim}
-姓名：小灰
-年龄：17
+Food: Cheeseburger ($5.45) 302 Kcal
+Drink: Coke ($3.70) Large
+	\end{verbatim}
+\end{tcolorbox}
+
+\vspace{0.5cm}
+
+\subsection{equals()}
+
+【==】运算符默认比较的是两个对象的地址，如果地址相同则为true，否则为false。\\
+
+equals()方法默认返回地址比较，通过重写equals()方法，可以自定义两个对象的等值比较规则。\\
+
+\mybox{重写equals()}
+
+\begin{lstlisting}[language=Java, title=Dog.java]
+public class Dog {
+    private String name;
+    private int age;
+    private String type;
+
+    public Dog(String name, int age, String type) {
+        this.name = name;
+        this.age = age;
+        this.type = type;
+    }
+    
+    /**
+     * 自定义规则：实现两个对象的等值比较
+     * @param obj - 需要比较的对象
+     * @return 比较的结果：相同true，不同false 
+     */
+    @Override
+    public boolean equals(Object obj) {
+        // 1. 如果两个对象地址相同，返回true
+        if(this == obj) {
+            return true;
+        }
+        
+        // 2. 如果obj是null，返回false
+        if(obj == null) {
+            return false;
+        }
+        
+        // 3. 如果两个对象类型不同，返回false
+        if(this.getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        // 4. 如果两个对象中的属性全部相同，返回true，否则返回false
+        Dog dog = (Dog)obj;
+        return this.name.equals(dog.name) 
+                && this.age == dog.age 
+                && this.type.equals(dog.type);
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, title=TestDog.java]
+public class TestDog {
+    public static void main(String[] args) {
+        Dog dog1 = new Dog("狗子", 3, "哈士奇");
+        Dog dog2 = new Dog("狗子", 3, "哈士奇");
+        
+        System.out.println(dog1 == dog2);
+        System.out.println(dog1.equals(dog2));
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+	\mybox{运行结果}
+	\begin{verbatim}
+false
+true
 	\end{verbatim}
 \end{tcolorbox}
 
