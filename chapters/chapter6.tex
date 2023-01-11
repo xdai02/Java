@@ -600,83 +600,261 @@ public class McDonalds {
 \end{lstlisting}
 
 \begin{tcolorbox}
-	\mybox{运行结果}
-	\begin{verbatim}
+    \mybox{运行结果}
+    \begin{verbatim}
 Food: Cheeseburger ($5.45) 302 Kcal
 Drink: Coke ($3.70) Large
 	\end{verbatim}
 \end{tcolorbox}
 
+Object类的equals()方法默认比较的是两个对象的地址，如果地址相同则为true，否则为false。而String类的equals()方法就重写了Object类的equals()方法，以便比较两个字符串的内容是否相同。\\
+
+\newpage
+
+\section{抽象类}
+
+\subsection{抽象类（Abstract Class）}
+
+有些类只能用来做继承，不能用于创建对象。例如在动物园中并不存在“动物”这个对象，只有动物的子类对象，因此动物类不应该被实例化。\\
+
+抽象类是一种不能被实例化的类，它用于定义接口或公共实现，供其它类继承并实现。
+
+\vspace{-0.5cm}
+
+\begin{lstlisting}[language=Java]
+public abstract class Animal {}
+\end{lstlisting}
+
 \vspace{0.5cm}
 
-\subsection{equals()}
+\subsection{抽象方法}
 
-【==】运算符默认比较的是两个对象的地址，如果地址相同则为true，否则为false。\\
+有时候父类提供的方法无法满足子类不同的需求，但是如果不定义该方法，就表示该类具有该行为。\\
 
-equals()方法默认返回地址比较，通过重写equals()方法，可以自定义两个对象的等值比较规则。\\
+这种情况就可以将这个父类的方法定义为抽象方法，这样所有的子类都必须要重写该方法，否则子类仍然为抽象类。\\
 
-\mybox{重写equals()}
+抽象方法只需声明，而不用实现。包含抽象方法的类必须声明为抽象类。\\
 
-\begin{lstlisting}[language=Java, title=Dog.java]
-public class Dog {
-    private String name;
-    private int age;
-    private String type;
+\mybox{动物}
 
-    public Dog(String name, int age, String type) {
-        this.name = name;
-        this.age = age;
-        this.type = type;
-    }
-    
-    /**
-     * 自定义规则：实现两个对象的等值比较
-     * @param obj - 需要比较的对象
-     * @return 比较的结果：相同true，不同false 
-     */
+\begin{lstlisting}[language=Java]
+public abstract class Animal {
+    public abstract String sound();
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+public class Dog extends Animal {
     @Override
-    public boolean equals(Object obj) {
-        // 1. 如果两个对象地址相同，返回true
-        if(this == obj) {
-            return true;
-        }
-        
-        // 2. 如果obj是null，返回false
-        if(obj == null) {
-            return false;
-        }
-        
-        // 3. 如果两个对象类型不同，返回false
-        if(this.getClass() != obj.getClass()) {
-            return false;
-        }
-        
-        // 4. 如果两个对象中的属性全部相同，返回true，否则返回false
-        Dog dog = (Dog)obj;
-        return this.name.equals(dog.name) 
-                && this.age == dog.age 
-                && this.type.equals(dog.type);
+    public String sound() {
+        return "Woof";
     }
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=Java, title=TestDog.java]
-public class TestDog {
+\begin{lstlisting}[language=Java]
+public class Cat extends Animal {
+    @Override
+    public String sound() {
+        return "Meow";
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+public class AnimalSound {
     public static void main(String[] args) {
-        Dog dog1 = new Dog("狗子", 3, "哈士奇");
-        Dog dog2 = new Dog("狗子", 3, "哈士奇");
-        
-        System.out.println(dog1 == dog2);
-        System.out.println(dog1.equals(dog2));
+        Dog dog = new Dog();
+        Cat cat = new Cat();
+
+        System.out.println("Dog's sound: " + dog.sound());
+        System.out.println("Cat's sound: " + cat.sound());
     }
 }
 \end{lstlisting}
 
 \begin{tcolorbox}
-	\mybox{运行结果}
-	\begin{verbatim}
-false
-true
+    \mybox{运行结果}
+    \begin{verbatim}
+Dog's sound: Woof
+Cat's sound: Meow
+	\end{verbatim}
+\end{tcolorbox}
+
+\newpage
+
+\section{多态}
+
+\subsection{多态（Polymorphism）}
+
+多态是指对象可以具有多种形态，即同一个对象在不同时刻表现出不同的行为。例如Dog和Cat都是Animal的子类，因此可以将子类对象赋值给父类引用，从而产生多种形态。
+
+\vspace{-0.5cm}
+
+\begin{lstlisting}[language=Java]
+Animal animal = new Dog();
+\end{lstlisting}
+
+由子类类型转型为父类类型，称为向上转型。向上转型是一种隐式转换，向上转型后的对象，只能访问父类中定义的成员。\\
+
+由父类类型转型为子类类型，称为向下转型。向下转型存在失败的可能，因为父类对象并不一定是子类对象。\\
+
+向下转型需要显式地强制转换，在转换时需要使用instanceof关键字进行类型检查。\\
+
+\mybox{员工工资}
+
+\begin{lstlisting}[language=Java]
+public abstract class Employee {
+    private String name;
+
+    public Employee(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public abstract double getSalary();
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+public class FullTimeEmployee extends Employee {
+    private double basicSalary;
+    private double bonus;
+
+    public FullTimeEmployee(
+            String name, double basicSalary, double bonus
+    ) {
+        super(name);
+        this.basicSalary = basicSalary;
+        this.bonus = bonus;
+    }
+
+    @Override
+    public double getSalary() {
+        return basicSalary + bonus;
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+public class PartTimeEmployee extends Employee {
+    private double dailyWage;
+    private int workingDays;
+
+    public PartTimeEmployee(
+            String name, double dailyWage, int workingDays
+    ) {
+        super(name);
+        this.dailyWage = dailyWage;
+        this.workingDays = workingDays;
+    }
+
+    @Override
+    public double getSalary() {
+        return dailyWage * workingDays;
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+public class Salary {
+    public static void main(String[] args) {
+        Employee[] employees = new Employee[]{
+                new FullTimeEmployee("Alice", 5783, 173),
+                new PartTimeEmployee("Bob", 150, 15)
+        };
+
+        for (Employee employee : employees) {
+            System.out.println(
+                    employee.getName() + ": $" + employee.getSalary()
+            );
+        }
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+    \mybox{运行结果}
+    \begin{verbatim}
+Alice: $5956.0
+Bob: $2250.0
+	\end{verbatim}
+\end{tcolorbox}
+
+\newpage
+
+\section{接口}
+
+\subsection{接口（Interface）}
+
+接口是一种特殊的抽象类，接口中的所有方法都是抽象方法，接口中的成员变量必须是常量。\\
+
+接口用于定义一组标准，代表了某种能力和约定。例如USB接口代表了电脑和外设设备之间的连接标准。USB接口不用关心连接的外设设备是什么，只要这个外设设备满足USB的标准，就可以连接到电脑上。\\
+
+\mybox{接口}
+
+\begin{lstlisting}[language=Java]
+public interface USB {
+    String getDeviceInfo();
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+public class Mouse implements USB {
+    @Override
+    public String getDeviceInfo() {
+        return "Mouse";
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+public class Keyboard implements USB {
+    @Override
+    public String getDeviceInfo() {
+        return "Keyboard";
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+public class Computer {
+    private USB usb1;
+    private USB usb2;
+
+    public void setUSB1(USB usb) {
+        usb1 = usb;
+    }
+
+    public void setUSB2(USB usb) {
+        usb2 = usb;
+    }
+
+    @Override
+    public String toString() {
+        return "USB 1: " + usb1.getDeviceInfo() + "\n"
+                + "USB 2: " + usb2.getDeviceInfo();
+    }
+
+    public static void main(String[] args) {
+        Computer computer = new Computer();
+
+        computer.setUSB1(new Mouse());
+        computer.setUSB2(new Keyboard());
+
+        System.out.println(computer);
+    }
+}
+\end{lstlisting}
+
+\begin{tcolorbox}
+    \mybox{运行结果}
+    \begin{verbatim}
+USB 1: Mouse
+USB 2: Keyboard
 	\end{verbatim}
 \end{tcolorbox}
 
