@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Multiples {
+public class SumSquare {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 

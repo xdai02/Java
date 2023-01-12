@@ -16,7 +16,6 @@ public class Character {
         } else {
             System.out.println("Special character");
         }
-
         scanner.close();
     }
 }
