@@ -435,7 +435,7 @@ public class ASCII {
 \vspace{-0.5cm}
 
 \begin{lstlisting}[language=Java]
-char[] str = {'h', 'e', 'l', 'l', 'o'};
+char[] str = {'p', 'r', 'o', 'g', 'r', 'a', 'm'};
 \end{lstlisting}
 
 但是这样的写法比较麻烦，也不容易对字符串进行操作，因此可以使用更为常用的String类来保存字符串。
@@ -443,7 +443,7 @@ char[] str = {'h', 'e', 'l', 'l', 'o'};
 \vspace{-0.5cm}
 
 \begin{lstlisting}[language=Java]
-String str = "hello";
+String str = "program";
 \end{lstlisting}
 
 占位符\%s可以对字符串进行格式化输出操作，通过Scanner类的next()和nextLine()方法可以读取字符串，其中next()只读取到空格为止，而nextLine()会读取到回车为止。\\
@@ -681,23 +681,23 @@ true
 	\setlength{\tabcolsep}{1mm}{
 		\begin{tabular}{|l|l|}
 			\hline
-			\textbf{方法}      & \textbf{功能}                \\
+			\textbf{方法}      & \textbf{功能}                   \\
 			\hline
-			indexOf()          & 获取字符首次出现位置         \\
+			indexOf()          & 获取字符/字符串首次出现位置     \\
 			\hline
-			lastIndexOf()      & 获取字符最后一次出现位置     \\
+			lastIndexOf()      & 获取字符/字符串最后一次出现位置 \\
 			\hline
-			contains()         & 判断字符串是否包含子串       \\
+			contains()         & 判断字符串是否包含子串          \\
 			\hline
-			startsWith()       & 判断字符串是否以指定子串开头 \\
+			startsWith()       & 判断字符串是否以指定子串开头    \\
 			\hline
-			endsWith()         & 判断字符串是否以指定子串结尾 \\
+			endsWith()         & 判断字符串是否以指定子串结尾    \\
 			\hline
-			equals()           & 判断字符串是否相等           \\
+			equals()           & 判断字符串是否相等              \\
 			\hline
-			equalsIgnoreCase() & 判断字符串忽略大小写是否相等 \\
+			equalsIgnoreCase() & 判断字符串忽略大小写是否相等    \\
 			\hline
-			compareTo()        & 比较两个字符串的大小         \\
+			compareTo()        & 字符串比较                      \\
 			\hline
 		\end{tabular}
 	}
