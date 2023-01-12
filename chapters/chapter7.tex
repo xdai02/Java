@@ -99,41 +99,52 @@ Only integers supported.
 	\end{verbatim}
 \end{tcolorbox}
 
-\newpage
+\vspace{0.5cm}
 
-\section{throw与throws}
+\subsection{throw}
 
-\subsection{throw / throws}
+throw关键字用于在方法内部抛出一个异常，throws关键字用于方法签名中，表示该方法可能会抛出异常。\\
 
-throw关键字用于抛出一个异常，一般用于程序出现某种逻辑时程序员主动抛出某种特定类型的异常。\\
-
-throws关键字用在声明方法的时候，表示该方法可能要抛出异常。定义了throws异常抛出类型的方法，在当前的方法中可以不处理这个异常，由调用方处理。\\
+抛出异常后，需要由方法的调用者来处理异常。如果调用者没有处理异常，那么异常就继续向上抛出，直到被处理。\\
 
 \begin{figure}[H]
     \centering
-    \includegraphics{img/Chapter7/7-2/1.png}
+    \includegraphics{img/Chapter7/7-1/2.png}
 \end{figure}
 
-\mybox{抛出异常}
+\mybox{阶乘}
 
 \begin{lstlisting}[language=Java]
-public class Person {
-    private int age;
-    
-    public void setAge(int age) throws Exception {
-        if(age < 0 || age > 130) {
-            throw new Exception();
-        }
-        this.age = age; 
-    }
-    
+import java.util.Scanner;
+
+public class Factorial {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter n: ");
+        int n = scanner.nextInt();
+
         try {
-            Person person = new Person();
-            person.setAge(-1);
-        } catch(Exception e) {
-            System.out.println("年龄异常");
+            System.out.println(n + "! = " + factorial(n));
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } finally {
+            scanner.close();
         }
+    }
+
+    public static int factorial(int n)
+            throws IllegalArgumentException {
+        if (n < 0) {
+            throw new IllegalArgumentException(
+                    "Factorial of negative numbers is not defined."
+            );
+        }
+
+        if (n == 0 || n == 1) {
+            return 1;
+        }
+        return n * factorial(n - 1);
     }
 }
 \end{lstlisting}
@@ -141,7 +152,11 @@ public class Person {
 \begin{tcolorbox}
     \mybox{运行结果}
     \begin{verbatim}
-年龄异常
+Enter n: -1
+java.lang.IllegalArgumentException: Factorial of negative 
+numbers is not defined.
+    at Factorial.factorial(Factorial.java:21)
+    at Factorial.main(Factorial.java:11)
 	\end{verbatim}
 \end{tcolorbox}
 
@@ -151,44 +166,47 @@ public class Person {
 
 \subsection{自定义异常}
 
-使用异常是为了处理一些重大的逻辑bug，这些逻辑bug可能会导致程序的崩溃。此时，可以使用异常机制，强迫修改这个bug。\\
+为了满足某些特定的需求，用户可以自定义异常，自定义异常继承于Exception类或其子类。自定义异常的目的是为了提供更具体和有意义的错误处理。\\
 
-系统中提供了很多的异常类型，但是异常类型提供地再多，也无法满足所有的需求。当需要的异常类型系统没有提供的时候，此时就需要自定义异常了。\\
-
-系统提供的每一种异常都是一个类，所以自定义异常其实就是写一个自定义的异常类。自定义的异常类，理论上来讲，类名可以任意定义，但是出于规范，一般都会以Exception作为结尾，例如ArrayIndexOutOfBoundsException、NullPointerException、ArithmeticException等。\\
-
-如果要自定义一个编译时异常，需要继承自Exception类，如果要自定义一个运行时异常，需要继承自RuntimeException类。\\
-
-\mybox{自定义异常}
+\mybox{库存}
 
 \begin{lstlisting}[language=Java]
-public class AgeException extends RuntimeException {
-    public AgeException() {
-        super("年龄异常");
+public class OutOfStockException extends Exception {
+    public OutOfStockException(String msg) {
+        super(msg);
     }
-    
-    public AgeException(int age) {
-        super("年龄异常：" + age);
+} 
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+public class Product {
+    private String name;
+    private int stock;
+
+    public Product(String name, int stock) {
+        this.name = name;
+        this.stock = stock;
+    }
+
+    public void purchase() throws OutOfStockException {
+        if (stock <= 0) {
+            throw new OutOfStockException(name + " is out of stock.");
+        }
+        stock--;
     }
 }
 \end{lstlisting}
 
 \begin{lstlisting}[language=Java]
-public class Person {
-    private int age;
-    
-    public void setAge(int age) throws AgeException {
-        if(age < 0 || age > 130) {
-            throw new AgeException(age);
-        }
-        this.age = age;
-    }
-    
+public class Purchase {
     public static void main(String[] args) {
+        Product product = new Product("Cheeseburger", 50);
+
         try {
-            Person person = new Person();
-            person.setAge(-1);
-        } catch(AgeException e) {
+            for (int i = 0; i < 60; i++) {
+                product.purchase();
+            }
+        } catch (OutOfStockException e) {
             e.printStackTrace();
         }
     }
@@ -198,9 +216,9 @@ public class Person {
 \begin{tcolorbox}
     \mybox{运行结果}
     \begin{verbatim}
-AgeException: 年龄异常：-1
-at Person.setAge(Person.java:6)
-at Person.main(Person.java:15)
+OutOfStockException: Cheeseburger is out of stock.
+    at Product.purchase(Product.java:12)
+    at Purchase.main(Purchase.java:7)
 	\end{verbatim}
 \end{tcolorbox}
 
