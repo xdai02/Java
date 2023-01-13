@@ -360,8 +360,8 @@ Account 2 Balance: 19.0
     \centering
     \begin{tikzpicture}
         \begin{class}[text width = 5cm]{Product}{0,0}
-            \attribute{- name}
-            \attribute{- price}
+            \attribute{- name : String}
+            \attribute{- price : double}
             \operation{+ Product(String, double)}
             \operation{+ getName() : String}
             \operation{+ getPrice() : double}
@@ -371,7 +371,7 @@ Account 2 Balance: 19.0
 
         \begin{class}[text width = 6cm]{Food}{-4,-7}
             \inherit{Product}
-            \attribute{- calories}
+            \attribute{- calories : int}
             \operation{+ Food(String, double, int)}
             \operation{+ getCalories() : int}
             \operation{+ setCalories(int) : void}
@@ -379,7 +379,7 @@ Account 2 Balance: 19.0
 
         \begin{class}[text width = 6cm]{Drink}{4,-7}
             \inherit{Product}
-            \attribute{- size}
+            \attribute{- size : String}
             \operation{+ Drink(String, double, String)}
             \operation{+ getSize() : String}
             \operation{+ setSize(String) : void}
@@ -504,6 +504,8 @@ System.out.println(food);   // Food@41629346
 
 在重写方法时，需要使用@Override注解，以便编译器检查该方法是否真的是从父类继承的。\\
 
+Object类的equals()方法默认比较的是两个对象的地址，如果地址相同则为true，否则为false。而String类的equals()方法就重写了Object类的equals()方法，以便比较两个字符串的内容是否相同。\\
+
 \mybox{麦当劳}
 
 \begin{lstlisting}[language=Java]
@@ -606,8 +608,6 @@ Food: Cheeseburger ($5.45) 302 Kcal
 Drink: Coke ($3.70) Large
 	\end{verbatim}
 \end{tcolorbox}
-
-Object类的equals()方法默认比较的是两个对象的地址，如果地址相同则为true，否则为false。而String类的equals()方法就重写了Object类的equals()方法，以便比较两个字符串的内容是否相同。\\
 
 \newpage
 
@@ -794,7 +794,7 @@ Bob: $2250.0
 
 接口用于定义一组标准，代表了某种能力和约定。例如USB接口代表了电脑和外设设备之间的连接标准。USB接口不用关心连接的外设设备是什么，只要这个外设设备满足USB的标准，就可以连接到电脑上。\\
 
-\mybox{接口}
+\mybox{USB}
 
 \begin{lstlisting}[language=Java]
 public interface USB {
